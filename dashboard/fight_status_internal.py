@@ -1,69 +1,44 @@
 import streamlit as st
+import websocket
+import json
 import pandas as pd
-import requests
-import time
-import plotly.express as px
 
-# API Endpoint
-API_URL = "http://localhost:5000/flights"
+# Streamlit UI Setup
+st.set_page_config(page_title="✈️ Flight Status Dashboard", layout="wide")
+st.title("Real-Time Flight Status Dashboard")
 
-# Streamlit Configuration
-st.set_page_config(page_title="UnicornAir Flight Status Dashboard", layout="wide")
-st.title("🛫 UnicornAir Flight Status Dashboard")
+# Placeholder for Flight Status Updates
+status_placeholder = st.empty()
 
-# Function to fetch data from the API
-def fetch_flight_data():
-    try:
-        response = requests.get(API_URL)
-        if response.status_code == 200:
-            return pd.DataFrame(response.json())
-        else:
-            st.error("Failed to fetch data from API")
-            return pd.DataFrame()
-    except requests.exceptions.RequestException as e:
-        st.error(f"Error connecting to API: {e}")
-        return pd.DataFrame()
+# List to Store All Messages
+messages = []
 
-# Auto-refresh every 30 seconds
-REFRESH_INTERVAL = 30
+# WebSocket Message Handler
+def on_message(ws, message):
+    flight_data = json.loads(message)
+    print(flight_data)
+    messages.append(flight_data)
 
-# Streamlit Layout
-st.sidebar.header("Filters")
-status_filter = st.sidebar.selectbox("Select Flight Status", ("ALL", "ON_TIME", "DELAYED", "DEPARTED", "ARRIVED", "CANCELLED"))
+    # Display all messages as a table
+    if messages:
+        df = pd.DataFrame(messages)
+        status_placeholder.dataframe(df[::-1])  # Show latest messages on top
 
-# Fetch data from API
-flight_data = fetch_flight_data()
+# WebSocket Error Handler
+def on_error(ws, error):
+    st.error(f"WebSocket Error: {error}")
 
-# Apply status filter if selected
-if status_filter != "ALL" and not flight_data.empty:
-    flight_data = flight_data[flight_data['status'] == status_filter]
+# WebSocket Close Handler
+def on_close(ws, close_status_code, close_msg):
+    st.warning("WebSocket connection closed")
 
-# Display Data Table
-st.subheader("📋 Flight Status Overview")
-if not flight_data.empty:
-    st.dataframe(flight_data.sort_values(by="timestamp", ascending=False), height=400)
+# WebSocket Connection Setup
+ws = websocket.WebSocketApp(
+    "ws://localhost:8000/ws",  # WebSocket URL
+    on_message=on_message,
+    on_error=on_error,
+    on_close=on_close
+)
 
-    # Visualizations
-    st.subheader("📊 Flight Status Summary")
-    status_counts = flight_data['status'].value_counts()
-    st.bar_chart(status_counts)
-
-    st.subheader("🕗 Delay Reasons Analysis")
-    delay_data = flight_data[flight_data['status'] == "DELAYED"]
-
-    if not delay_data.empty:
-        delay_reasons = delay_data['delay_reason'].value_counts().reset_index()
-        delay_reasons.columns = ['Reason', 'Count']
-
-        # Create Pie Chart
-        fig = px.pie(delay_reasons, names='Reason', values='Count', title='Delay Reasons Distribution')
-        st.plotly_chart(fig)
-    else:
-        st.info("No delayed flights to display delay reasons.")
-else:
-    st.warning("No flight data available. Please check the API or data source.")
-
-# Auto-refresh feature
-st.caption(f"Dashboard auto-refreshes every {REFRESH_INTERVAL} seconds.")
-time.sleep(REFRESH_INTERVAL)
-st.rerun()
+# Run WebSocket Connection
+ws.run_forever()

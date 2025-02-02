@@ -1,10 +1,13 @@
+import os
 import sqlite3
 from datetime import datetime, timedelta
 import random
 
 # Database connection
-db_path = '../../data/operations_db/flight.db'
-conn = sqlite3.connect(db_path)
+ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+DB_PATH = os.path.join(ROOT_DIR, '../data/operations_db/flight.db')
+# db_path = '../../data/operations_db/flight.db'
+conn = sqlite3.connect(DB_PATH)
 cursor = conn.cursor()
 
 # Fetch active planes

@@ -1,60 +1,45 @@
-import sqlite3
-import csv
 import os
+import csv
 import time
+from kafka import KafkaProducer
+import json
 
-# SQLite DB setup
+# Kafka setup
+KAFKA_BROKER = 'localhost:9092'  # Change this if using a remote broker
+TOPIC = 'flight_status_updates'
+
+# Directory to watch
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
-WATCH_DIRECTORY = os.path.join(ROOT_DIR, '../../data/flight_delay')
+WATCH_DIRECTORY = os.path.join(ROOT_DIR, '../../data/flight_status')
 
-ROOT_DIRECTORY = os.path.dirname(os.path.abspath(__file__))
-DB_DIRECTORY = os.path.join(ROOT_DIRECTORY, '../../data/operations_db')
-DB_FILE = os.path.join(DB_DIRECTORY, "flight.db")
+# Initialize Kafka Producer
+producer = KafkaProducer(
+    bootstrap_servers=[KAFKA_BROKER],
+    value_serializer=lambda v: json.dumps(v).encode('utf-8')
+)
 
-
-# Initialize the database
-def initialize_database():
-    conn = sqlite3.connect(DB_FILE)
-    cursor = conn.cursor()
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS flight_status (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            flight_id TEXT,
-            status TEXT,
-            timestamp TEXT,
-            departure_airport TEXT,
-            arrival_airport TEXT,
-            delay_reason TEXT,
-            delay_duration INTEGER
-        )
-    ''')
-    conn.commit()
-    conn.close()
-
-# Process CSV file and insert data into the database
+# Process CSV file and send data to Kafka
 def process_csv_file(file_path):
-    conn = sqlite3.connect(DB_FILE)
-    cursor = conn.cursor()
-
     with open(file_path, 'r') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
-            cursor.execute('''
-                INSERT INTO flight_status (flight_id, status, timestamp, departure_airport, arrival_airport, delay_reason, delay_duration)
-                VALUES (?, ?, ?, ?, ?, ?, ?)
-            ''', (
-                row['flight_id'],
-                row['status'],
-                row['timestamp'],
-                row['departure_airport'],
-                row['arrival_airport'],
-                row['delay_reason'],
-                int(row['delay_duration']) if row['delay_duration'] else 0
-            ))
+            # Prepare the message
+            message = {
+                'flight_id': row['flight_number'],
+                'status': row['flight_status'],
+                'timestamp': row['reported_at'],
+                'departure_airport': row['departure_airport'],
+                'arrival_airport': row['arrival_airport'],
+                'delay_code': row['delay_code'],
+                'delay_reason': row['delay_reason'],
+                'delay_duration': int(row['delay_duration']) if row['delay_duration'] else 0
+            }
 
-    conn.commit()
-    conn.close()
-    print(f"Processed and inserted data from {file_path}")
+            # Send message to Kafka
+            producer.send(TOPIC, value=message)
+            print(f"Sent to Kafka: {message}")
+
+    print(f"Processed and sent data from {file_path}")
 
 # Watch for new CSV files and process them
 def watch_directory(interval_seconds=10):
@@ -73,6 +58,5 @@ def watch_directory(interval_seconds=10):
 if __name__ == "__main__":
     if not os.path.exists(WATCH_DIRECTORY):
         os.makedirs(WATCH_DIRECTORY)
-    
-    initialize_database()
+
     watch_directory()
