@@ -1,6 +1,0 @@
-message_id,flight_number,departure_airport,arrival_airport,scheduled_departure,scheduled_arrival,flight_status,delay_code,delay_reason,delay_duration,reported_by,reported_at,remarks
-dead9264-5729-4acf-adc7-451fd697c034,UAF063,HAJ,TPE,2025-02-01 10:00:00,2025-02-01 12:00:00,ARRIVED,00,,0,AODB,2025-02-01T17:56:48.256482,N/A
-4cc6b53d-1590-40e9-9c2e-f04bc34fbdc6,UAF045,HAJ,SVG,2025-02-01 20:00:00,2025-02-01 22:00:00,ON_TIME,00,,0,Ops Staff,2025-02-01T17:56:48.256510,N/A
-97c88aee-b15e-44c3-bdf7-9be8a56cb4e2,UAF038,HAJ,TSF,2025-02-01 10:00:00,2025-02-01 12:00:00,DELAYED,64,Crew Unavailability,41,Ops Staff,2025-02-01T17:56:48.256523,Crew Unavailability
-6bc758ed-2362-4991-b44c-6babc1cc7e70,UAF014,HAJ,LYS,2025-02-01 15:00:00,2025-02-01 17:00:00,ARRIVED,00,,0,Ops Staff,2025-02-01T17:56:48.256538,N/A
-99f3da0f-4427-4f2b-96f1-923f6a6f268e,UAF083,HAJ,CDG,2025-02-01 10:00:00,2025-02-01 12:00:00,ARRIVED,00,,0,AODB,2025-02-01T17:56:48.256549,N/A

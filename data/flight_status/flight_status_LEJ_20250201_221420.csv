@@ -1,6 +1,0 @@
-message_id,flight_number,departure_airport,arrival_airport,scheduled_departure,scheduled_arrival,flight_status,delay_code,delay_reason,delay_duration,reported_by,reported_at,remarks
-2f2f386d-2363-40c0-afbf-28bce97a2e28,UAF090,LEJ,BCN,2025-02-01 20:00:00,2025-02-01 22:00:00,DEPARTED,00,,0,Ops Staff,2025-02-01T21:14:20.397179,N/A
-1c4bb308-2a22-402b-96da-07faf5f2b4ca,UAF065,LEJ,HND,2025-02-01 20:00:00,2025-02-01 22:00:00,DELAYED,31,Technical Issue,54,Ops Staff,2025-02-01T21:14:20.397258,Technical Issue
-52a914e6-2b78-4444-9f5c-3918d3d92e18,UAF006,LEJ,PRG,2025-02-01 00:00:00,2025-02-01 02:00:00,DELAYED,31,Technical Issue,84,AODB,2025-02-01T21:14:20.397318,Technical Issue
-bd6d5217-f42b-4a92-bae6-f96daca84f2e,UAF089,LEJ,JFK,2025-02-01 15:00:00,2025-02-01 17:00:00,ARRIVED,00,,0,AODB,2025-02-01T21:14:20.397363,N/A
-4dac45a6-2676-4696-b149-778b96f4aa19,UAF041,LEJ,CGK,2025-02-01 00:00:00,2025-02-01 02:00:00,DELAYED,86,Weather,167,Ops Staff,2025-02-01T21:14:20.397392,Weather

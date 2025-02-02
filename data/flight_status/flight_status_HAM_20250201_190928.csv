@@ -1,6 +1,0 @@
-message_id,flight_number,departure_airport,arrival_airport,scheduled_departure,scheduled_arrival,flight_status,delay_code,delay_reason,delay_duration,reported_by,reported_at,remarks
-988bca8c-b4ca-426d-9740-b3bb845f046c,UAF075,HAM,SIN,2025-02-01 20:00:00,2025-02-01 22:00:00,ON_TIME,00,,0,AODB,2025-02-01T18:09:28.884908,N/A
-d79380f2-7f03-4980-bbc7-ff2d18b2977d,UAF085,HAM,DPS,2025-02-01 20:00:00,2025-02-01 22:00:00,ON_TIME,00,,0,Ops Staff,2025-02-01T18:09:28.885023,N/A
-084ec90a-e2fd-4c92-918d-5324f7881f61,UAF046,HAM,SYD,2025-02-01 00:00:00,2025-02-01 02:00:00,ARRIVED,00,,0,AODB,2025-02-01T18:09:28.885073,N/A
-0fba9c71-1ee1-4687-9aa4-469261634fef,UAF017,HAM,HEL,2025-02-01 05:00:00,2025-02-01 07:00:00,DELAYED,64,Crew Unavailability,43,AODB,2025-02-01T18:09:28.885127,Crew Unavailability
-10406ca7-923d-4abc-839f-410f44698a36,UAF056,HAM,LUX,2025-02-01 00:00:00,2025-02-01 02:00:00,DELAYED,64,Crew Unavailability,47,Ops Staff,2025-02-01T18:09:28.885235,Crew Unavailability

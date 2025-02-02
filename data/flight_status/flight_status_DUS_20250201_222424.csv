@@ -1,6 +1,0 @@
-message_id,flight_number,departure_airport,arrival_airport,scheduled_departure,scheduled_arrival,flight_status,delay_code,delay_reason,delay_duration,reported_by,reported_at,remarks
-8b17d148-b0f5-4b02-8377-6f10917c87a4,UAF087,DUS,ZRH,2025-02-01 05:00:00,2025-02-01 07:00:00,ARRIVED,00,,0,Ops Staff,2025-02-01T21:24:24.187856,N/A
-15186d1b-e4a8-4259-b61f-667e25b30375,UAF044,DUS,GOT,2025-02-01 15:00:00,2025-02-01 17:00:00,ARRIVED,00,,0,Ops Staff,2025-02-01T21:24:24.187905,N/A
-688632e0-6573-4e17-ab65-e1bdad80bdab,UAF080,DUS,GRU,2025-02-01 20:00:00,2025-02-01 22:00:00,DEPARTED,00,,0,Ops Staff,2025-02-01T21:24:24.187955,N/A
-840c7e2f-ea3e-4ce3-aed9-1c2186ef09b9,UAF034,DUS,BRU,2025-02-01 15:00:00,2025-02-01 17:00:00,DELAYED,64,Crew Unavailability,93,AODB,2025-02-01T21:24:24.187986,Crew Unavailability
-4bdfd30b-2674-4fe6-8a3d-42dbe5df7db6,UAF095,DUS,PVG,2025-02-01 20:00:00,2025-02-01 22:00:00,DEPARTED,00,,0,Ops Staff,2025-02-01T21:24:24.188037,N/A
