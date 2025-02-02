@@ -33,6 +33,17 @@ CREATE TABLE notification (
 CREATE INDEX idx_booking_flight_id ON booking (flight_id);
 CREATE INDEX idx_notification_flight_id ON notification (flight_id);
 
+-- SQLite
+CREATE TABLE IF NOT EXISTS flight_status (
+    flight_id TEXT PRIMARY KEY,
+    status TEXT,
+    timestamp TEXT,
+    departure_airport TEXT,
+    arrival_airport TEXT,
+    delay_reason TEXT,
+    delay_duration INTEGER
+);
+
 -- 🚀 Sample Data Insertion for Testing
 
 -- Sample Passengers

@@ -1,1 +1,3 @@
-./flight_status/
+flight_status/
+operations_db/flight.db-shm
+operations_db/flight.db-wal
