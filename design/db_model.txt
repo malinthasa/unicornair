@@ -1,0 +1,31 @@
+PLANES
+- plane_id (PK)
+- model
+- manufacturer
+- capacity
+- registration_number
+- status
+
+AIRPORTS
+- airport_code (PK)
+- name
+- city
+- country
+- timezone
+
+JOURNEYS (FLIGHTS)
+- flight_id (PK)
+- plane_id (FK → PLANES.plane_id)
+- departure_airport (FK → AIRPORTS.airport_code)
+- arrival_airport (FK → AIRPORTS.airport_code)
+- scheduled_departure
+- scheduled_arrival
+- status
+
+FLIGHT_STATUS
+- status_id (PK)
+- flight_id (FK → JOURNEYS.flight_id)
+- timestamp
+- status
+- delay_reason
+- delay_duration

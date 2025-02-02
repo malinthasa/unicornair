@@ -1,0 +1,5 @@
+message_id,flight_number,departure_airport,arrival_airport,scheduled_departure,scheduled_arrival,flight_status,delay_code,delay_reason,delay_duration,reported_by,reported_at,remarks
+3969b5cc-e290-489c-ae16-9e2e9495eaa2,UAF019,BRE,MEX,2025-02-01 15:00:00,2025-02-01 17:00:00,ARRIVED,00,,0,AODB,2025-02-01T18:15:40.726459,N/A
+ca09eab7-ba20-4ff0-8944-8a60d1610546,UAF084,BRE,ZRH,2025-02-01 15:00:00,2025-02-01 17:00:00,ARRIVED,00,,0,Ops Staff,2025-02-01T18:15:40.726494,N/A
+16fd98d4-2050-41ef-8f86-dc8860aaffe1,UAF009,BRE,ICN,2025-02-01 15:00:00,2025-02-01 17:00:00,ARRIVED,00,,0,Ops Staff,2025-02-01T18:15:40.726523,N/A
+8952d9ab-1633-4370-a676-becda7683de5,UAF067,BRE,LAX,2025-02-01 05:00:00,2025-02-01 07:00:00,ARRIVED,00,,0,AODB,2025-02-01T18:15:40.726534,N/A

@@ -1,0 +1,6 @@
+message_id,flight_number,departure_airport,arrival_airport,scheduled_departure,scheduled_arrival,flight_status,delay_code,delay_reason,delay_duration,reported_by,reported_at,remarks
+d5814ba1-8ccc-44d8-9463-ff38d1a56853,UAF037,STR,TLL,2025-02-01 05:00:00,2025-02-01 07:00:00,ARRIVED,00,,0,AODB,2025-02-01T16:47:38.543657,N/A
+bc13e895-5d0e-4093-9d8d-56dbb77ac2e1,UAF012,STR,OTP,2025-02-01 05:00:00,2025-02-01 07:00:00,ARRIVED,00,,0,Ops Staff,2025-02-01T16:47:38.543760,N/A
+bc13bfb0-95e1-45ca-97ef-fad04479fb4b,UAF062,STR,BUD,2025-02-01 05:00:00,2025-02-01 07:00:00,DELAYED,31,Technical Issue,167,Ops Staff,2025-02-01T16:47:38.543819,Technical Issue
+82781e96-c62f-4590-a26a-a864f4f9653b,UAF074,STR,YYZ,2025-02-01 15:00:00,2025-02-01 17:00:00,DELAYED,64,Crew Unavailability,95,Ops Staff,2025-02-01T16:47:38.543870,Crew Unavailability
+82247b5d-f4de-4baa-bf5b-19bc2123faed,UAF066,STR,ARN,2025-02-01 00:00:00,2025-02-01 02:00:00,ARRIVED,00,,0,Ops Staff,2025-02-01T16:47:38.543914,N/A

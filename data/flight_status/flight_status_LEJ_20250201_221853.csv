@@ -1,0 +1,6 @@
+message_id,flight_number,departure_airport,arrival_airport,scheduled_departure,scheduled_arrival,flight_status,delay_code,delay_reason,delay_duration,reported_by,reported_at,remarks
+156cc0b2-033c-4436-a868-fd4cb9d3c32a,UAF029,LEJ,SYD,2025-02-01 15:00:00,2025-02-01 17:00:00,ARRIVED,00,,0,AODB,2025-02-01T21:18:53.160403,N/A
+490d5dc2-f8b8-4a75-a332-d00e32723221,UAF059,LEJ,DEL,2025-02-01 15:00:00,2025-02-01 17:00:00,ARRIVED,00,,0,Ops Staff,2025-02-01T21:18:53.160453,N/A
+b8b35ab8-afe9-4ed2-b9ad-8abcec88e78e,UAF090,LEJ,BCN,2025-02-01 20:00:00,2025-02-01 22:00:00,DELAYED,86,Weather,74,Ops Staff,2025-02-01T21:18:53.160497,Weather
+bd407f9c-796b-422c-a6a1-23e548edf1c1,UAF089,LEJ,JFK,2025-02-01 15:00:00,2025-02-01 17:00:00,ARRIVED,00,,0,AODB,2025-02-01T21:18:53.160529,N/A
+60db5ce0-b4a0-4784-bc36-2eaa4233d9c1,UAF065,LEJ,HND,2025-02-01 20:00:00,2025-02-01 22:00:00,DELAYED,64,Crew Unavailability,154,Ops Staff,2025-02-01T21:18:53.160549,Crew Unavailability

@@ -1,0 +1,6 @@
+message_id,flight_number,departure_airport,arrival_airport,scheduled_departure,scheduled_arrival,flight_status,delay_code,delay_reason,delay_duration,reported_by,reported_at,remarks
+fc6eb1de-7f68-4a26-9333-ebb915130046,UAF092,ERF,OTP,2025-02-01 05:00:00,2025-02-01 07:00:00,ARRIVED,00,,0,Ops Staff,2025-02-01T16:33:12.568847,N/A
+3a72e722-2dca-48a7-a77d-eab90d911ac8,UAF016,ERF,TSF,2025-02-01 00:00:00,2025-02-01 02:00:00,ARRIVED,00,,0,AODB,2025-02-01T16:33:12.568883,N/A
+eaf2cef9-94f7-48f3-a18c-80fd71f7e11b,UAF024,ERF,SIN,2025-02-01 15:00:00,2025-02-01 17:00:00,DELAYED,86,Weather,49,Ops Staff,2025-02-01T16:33:12.568916,Weather
+9d142bb5-8688-4de1-a0d0-174b04a8fff1,UAF004,ERF,CMB,2025-02-01 15:00:00,2025-02-01 17:00:00,DEPARTED,00,,0,Ops Staff,2025-02-01T16:33:12.568963,N/A
+b73bea55-2f30-4d4b-a79b-586405281c65,UAF023,ERF,SIN,2025-02-01 10:00:00,2025-02-01 12:00:00,DELAYED,64,Crew Unavailability,151,Ops Staff,2025-02-01T16:33:12.569017,Crew Unavailability

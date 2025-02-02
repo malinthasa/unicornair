@@ -1,0 +1,6 @@
+message_id,flight_number,departure_airport,arrival_airport,scheduled_departure,scheduled_arrival,flight_status,delay_code,delay_reason,delay_duration,reported_by,reported_at,remarks
+b1f71fe6-fe7a-488e-9a09-b0edb7a1a81c,UAF093,FDH,NRT,2025-02-01 10:00:00,2025-02-01 12:00:00,ARRIVED,00,,0,Ops Staff,2025-02-01T21:18:53.162064,N/A
+d66e5dba-85b5-4567-bc10-953fb7bda7ef,UAF036,FDH,HAN,2025-02-01 00:00:00,2025-02-01 02:00:00,ARRIVED,00,,0,Ops Staff,2025-02-01T21:18:53.162105,N/A
+287bd161-827b-4ecd-9c6f-a64bcc7e7038,UAF005,FDH,DUB,2025-02-01 20:00:00,2025-02-01 22:00:00,DEPARTED,00,,0,Ops Staff,2025-02-01T21:18:53.162129,N/A
+44874205-b671-4979-b6fa-3578584d73de,UAF018,FDH,KUL,2025-02-01 10:00:00,2025-02-01 12:00:00,DELAYED,31,Technical Issue,171,Ops Staff,2025-02-01T21:18:53.162163,Technical Issue
+5b48fbcf-e4be-42e2-9874-93e4b2bdd405,UAF057,FDH,FAO,2025-02-01 05:00:00,2025-02-01 07:00:00,ARRIVED,00,,0,AODB,2025-02-01T21:18:53.162190,N/A

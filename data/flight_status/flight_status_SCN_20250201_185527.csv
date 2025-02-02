@@ -1,0 +1,5 @@
+message_id,flight_number,departure_airport,arrival_airport,scheduled_departure,scheduled_arrival,flight_status,delay_code,delay_reason,delay_duration,reported_by,reported_at,remarks
+fab66cd0-88a2-4128-a6b0-4951c705fa0d,UAF061,SCN,AMS,2025-02-01 00:00:00,2025-02-01 02:00:00,DELAYED,31,Technical Issue,118,AODB,2025-02-01T17:55:27.986052,Technical Issue
+b3e0e88f-9314-437e-811a-ac166f46b66c,UAF052,SCN,SOF,2025-02-01 05:00:00,2025-02-01 07:00:00,ARRIVED,00,,0,Ops Staff,2025-02-01T17:55:27.986100,N/A
+a6e4a39e-bdba-4d8a-b2ba-38096b523d91,UAF081,SCN,TLL,2025-02-01 00:00:00,2025-02-01 02:00:00,ARRIVED,00,,0,AODB,2025-02-01T17:55:27.986117,N/A
+6ea23e2a-a29e-426a-a61f-304047ac6b54,UAF030,SCN,PEK,2025-02-01 20:00:00,2025-02-01 22:00:00,ON_TIME,00,,0,AODB,2025-02-01T17:55:27.986129,N/A

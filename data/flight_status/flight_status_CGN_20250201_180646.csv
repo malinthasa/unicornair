@@ -1,0 +1,5 @@
+message_id,flight_number,departure_airport,arrival_airport,scheduled_departure,scheduled_arrival,flight_status,delay_code,delay_reason,delay_duration,reported_by,reported_at,remarks
+641fbf38-31dd-4255-bac6-c248bfb6c610,UAF011,CGN,JNB,2025-02-01 00:00:00,2025-02-01 02:00:00,ARRIVED,00,,0,Ops Staff,2025-02-01T17:06:46.916308,N/A
+cc3b8dfa-dfb8-4baf-93b5-d5782f979c72,UAF033,CGN,RIX,2025-02-01 10:00:00,2025-02-01 12:00:00,CANCELLED,00,,0,AODB,2025-02-01T17:06:46.916416,N/A
+5c4339d4-205a-48e6-b351-54ae5f2aea96,UAF020,CGN,HEL,2025-02-01 20:00:00,2025-02-01 22:00:00,ON_TIME,00,,0,Ops Staff,2025-02-01T17:06:46.916519,N/A
+004d4e41-eafe-4ec5-a9ac-4ebacadacc31,UAF071,CGN,LAX,2025-02-01 00:00:00,2025-02-01 02:00:00,ARRIVED,00,,0,Ops Staff,2025-02-01T17:06:46.916563,N/A

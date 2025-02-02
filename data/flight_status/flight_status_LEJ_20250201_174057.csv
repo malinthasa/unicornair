@@ -1,0 +1,6 @@
+message_id,flight_number,departure_airport,arrival_airport,scheduled_departure,scheduled_arrival,flight_status,delay_code,delay_reason,delay_duration,reported_by,reported_at,remarks
+da257cf9-36f5-495f-ae05-6840d9c4dd37,UAF089,LEJ,JFK,2025-02-01 15:00:00,2025-02-01 17:00:00,DELAYED,31,Technical Issue,79,Ops Staff,2025-02-01T16:40:57.399764,Technical Issue
+ec5d3161-8f54-44c4-9b2c-683cc73daac5,UAF059,LEJ,DEL,2025-02-01 15:00:00,2025-02-01 17:00:00,DELAYED,93,Air Traffic,156,Ops Staff,2025-02-01T16:40:57.399795,Air Traffic
+888c2229-e281-4394-9e0e-4c35cadc6c8f,UAF029,LEJ,SYD,2025-02-01 15:00:00,2025-02-01 17:00:00,DEPARTED,00,,0,Ops Staff,2025-02-01T16:40:57.399814,N/A
+f219ed5e-4547-441e-ac56-f42f773bcceb,UAF065,LEJ,HND,2025-02-01 20:00:00,2025-02-01 22:00:00,ON_TIME,00,,0,AODB,2025-02-01T16:40:57.399825,N/A
+cb84955d-91fe-4736-b67c-e4257360cce1,UAF041,LEJ,CGK,2025-02-01 00:00:00,2025-02-01 02:00:00,DELAYED,31,Technical Issue,171,Ops Staff,2025-02-01T16:40:57.399834,Technical Issue

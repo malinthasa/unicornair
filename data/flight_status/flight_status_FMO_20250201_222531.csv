@@ -1,0 +1,6 @@
+message_id,flight_number,departure_airport,arrival_airport,scheduled_departure,scheduled_arrival,flight_status,delay_code,delay_reason,delay_duration,reported_by,reported_at,remarks
+45bcbfa4-a10f-4147-b002-5aa83b0e5b56,UAF058,FMO,HAN,2025-02-01 10:00:00,2025-02-01 12:00:00,ARRIVED,00,,0,Ops Staff,2025-02-01T21:25:31.671012,N/A
+effbe2b4-d3d4-4f3a-a30b-42f639e80277,UAF007,FMO,DPS,2025-02-01 05:00:00,2025-02-01 07:00:00,ARRIVED,00,,0,Ops Staff,2025-02-01T21:25:31.671100,N/A
+b0f25005-2e4e-43a5-8df1-22781b3b16d5,UAF043,FMO,ZRH,2025-02-01 10:00:00,2025-02-01 12:00:00,ARRIVED,00,,0,Ops Staff,2025-02-01T21:25:31.671187,N/A
+ed49a9cd-8d9d-407b-a108-5a2fedd3439a,UAF049,FMO,VNO,2025-02-01 15:00:00,2025-02-01 17:00:00,DELAYED,64,Crew Unavailability,159,AODB,2025-02-01T21:25:31.671256,Crew Unavailability
+51fc3415-5a7d-4fb0-880f-bb1e00ba4d4d,UAF054,FMO,GVA,2025-02-01 15:00:00,2025-02-01 17:00:00,ARRIVED,00,,0,Ops Staff,2025-02-01T21:25:31.671326,N/A

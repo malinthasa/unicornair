@@ -1,0 +1,6 @@
+message_id,flight_number,departure_airport,arrival_airport,scheduled_departure,scheduled_arrival,flight_status,delay_code,delay_reason,delay_duration,reported_by,reported_at,remarks
+b1aeeac5-ce8b-489c-b4c5-cdbf0e7af8c8,UAF031,NUE,LAX,2025-02-01 00:00:00,2025-02-01 02:00:00,CANCELLED,00,,0,AODB,2025-02-01T18:15:40.725626,N/A
+4d89c581-46ec-47df-ab48-ca040d3a7029,UAF027,NUE,FAO,2025-02-01 05:00:00,2025-02-01 07:00:00,DELAYED,64,Crew Unavailability,161,Ops Staff,2025-02-01T18:15:40.725655,Crew Unavailability
+fd5b1f2a-0b7b-40ea-87be-ff4c9046e04a,UAF001,NUE,AMS,2025-02-01 00:00:00,2025-02-01 02:00:00,ARRIVED,00,,0,AODB,2025-02-01T18:15:40.725705,N/A
+1dbfa52a-f4a3-46bf-8e57-8381da374644,UAF035,NUE,CPH,2025-02-01 20:00:00,2025-02-01 22:00:00,ON_TIME,00,,0,Ops Staff,2025-02-01T18:15:40.725738,N/A
+d1dd3a9d-8cd5-4fcf-bfc7-0357b3d4613b,UAF026,NUE,ATH,2025-02-01 00:00:00,2025-02-01 02:00:00,ARRIVED,00,,0,Ops Staff,2025-02-01T18:15:40.725750,N/A
