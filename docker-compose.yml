@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  db:
+    build: ./db
+    container_name: operations_db
+    restart: always
+    environment: 
+      POSTGRES_USER: unicorn_admin
+      POSTGRES_PASSWORD: unicorn_password
+      POSTGRES_DB: operations
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  app:
+    build: ./app
+    container_name: python_app
+    restart: always
+    depends_on:
+      - db
+    volumes:
+      - shared_data:/shared_data
+
+  app_2:
+    build: ./journey_generator
+    container_name: python_app_2
+    restart: "no"
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:
+  shared_data:

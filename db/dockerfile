@@ -1,0 +1,9 @@
+FROM postgres:latest
+
+WORKDIR /docker-entrypoint-initdb.d
+
+
+COPY DDL.sql .
+COPY DML.sql .
+COPY init_permissions.sql .
+EXPOSE 5432
