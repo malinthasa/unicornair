@@ -1,4 +1,0 @@
-message_id,flight_number,departure_airport,arrival_airport,scheduled_departure,scheduled_arrival,flight_status,delay_code,delay_reason,delay_duration,reported_by,reported_at,remarks
-39a0a391-e9ec-493b-9cf8-4d92a9445c8b,UAF069,DRS,FAO,2025-02-01 15:00:00,2025-02-01 17:00:00,ARRIVED,00,,0,Ops Staff,2025-02-01T17:18:27.874143,N/A
-624806d2-4af7-4d75-b319-89bad33d48bf,UAF008,DRS,GRU,2025-02-01 10:00:00,2025-02-01 12:00:00,ARRIVED,00,,0,AODB,2025-02-01T17:18:27.874272,N/A
-a5d5a7c2-e2a1-4241-8836-65c77ec5af1a,UAF002,DRS,LIS,2025-02-01 05:00:00,2025-02-01 07:00:00,ARRIVED,00,,0,Ops Staff,2025-02-01T17:18:27.874378,N/A

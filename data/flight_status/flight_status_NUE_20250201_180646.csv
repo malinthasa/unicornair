@@ -1,6 +1,0 @@
-message_id,flight_number,departure_airport,arrival_airport,scheduled_departure,scheduled_arrival,flight_status,delay_code,delay_reason,delay_duration,reported_by,reported_at,remarks
-0a1a28e7-b4cc-48db-bb64-147b0b71e686,UAF072,NUE,DXB,2025-02-01 05:00:00,2025-02-01 07:00:00,ARRIVED,00,,0,AODB,2025-02-01T17:06:46.917673,N/A
-d1d3bbbe-571c-4db1-a22a-ddb65c8f0b65,UAF010,NUE,HND,2025-02-01 20:00:00,2025-02-01 22:00:00,ON_TIME,00,,0,Ops Staff,2025-02-01T17:06:46.917732,N/A
-6a24f830-5a3e-4c3a-b2c4-a6216ae242ee,UAF003,NUE,TPE,2025-02-01 10:00:00,2025-02-01 12:00:00,DELAYED,64,Crew Unavailability,82,Ops Staff,2025-02-01T17:06:46.917762,Crew Unavailability
-91c4aa9a-2c48-4ee0-a48b-ae2dead220a4,UAF035,NUE,CPH,2025-02-01 20:00:00,2025-02-01 22:00:00,ON_TIME,00,,0,Ops Staff,2025-02-01T17:06:46.917812,N/A
-81b73dee-18df-4e78-b146-146b3d4fe1bb,UAF001,NUE,AMS,2025-02-01 00:00:00,2025-02-01 02:00:00,ARRIVED,00,,0,Ops Staff,2025-02-01T17:06:46.917840,N/A

@@ -1,5 +1,0 @@
-message_id,flight_number,departure_airport,arrival_airport,scheduled_departure,scheduled_arrival,flight_status,delay_code,delay_reason,delay_duration,reported_by,reported_at,remarks
-e07821e3-5dfe-41ba-9649-568a557b6bbb,UAF022,MUC,TPE,2025-02-01 05:00:00,2025-02-01 07:00:00,ARRIVED,00,,0,AODB,2025-02-01T21:20:13.621434,N/A
-d06a4ddd-a11d-43b0-978d-45e488222471,UAF032,MUC,CMB,2025-02-01 05:00:00,2025-02-01 07:00:00,CANCELLED,00,,0,Ops Staff,2025-02-01T21:20:13.621603,N/A
-081e327f-f875-4f69-b69b-89144e9f55c0,UAF028,MUC,RUH,2025-02-01 10:00:00,2025-02-01 12:00:00,DELAYED,86,Weather,96,Ops Staff,2025-02-01T21:20:13.621752,Weather
-afc4179f-dc27-4f00-a8c0-d9dd52e435ac,UAF079,MUC,SOF,2025-02-01 15:00:00,2025-02-01 17:00:00,ARRIVED,00,,0,AODB,2025-02-01T21:20:13.621896,N/A
