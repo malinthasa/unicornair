@@ -7,6 +7,18 @@ import time
 import pytz
 import uuid
 
+import logging
+import sys
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,                      # Log level
+    format='%(asctime)s - %(levelname)s - %(message)s',  # Log format
+    handlers=[
+        logging.StreamHandler(sys.stdout),  # Send logs to stdout
+    ]
+)
+
 DB_HOST = 'db'
 DB_PORT = '5432'
 DB_NAME = 'operations'
@@ -25,12 +37,7 @@ IATA_DELAY_CODES = {
 
 def get_db_conn():
     connection = None
-    max_retries = 10
-    retry_delay = 5 
-
-    for attempt in range(max_retries):
-        print(f"🔄 Attempt {attempt + 1}/{max_retries}: Connecting to PostgreSQL...")
-        try:
+    try:
             connection = psycopg2.connect(
                 host=DB_HOST,
                 port=DB_PORT,
@@ -38,11 +45,9 @@ def get_db_conn():
                 user=DB_USER,
                 password=DB_PASSWORD
             )
-            print("✅ Connected to PostgreSQL")
-            break
-        except psycopg2.OperationalError as e:
-            print(f"⏳ Attempt {attempt + 1}/{max_retries}: Database not ready. Retrying in {retry_delay} seconds...")
-            time.sleep(retry_delay)
+            logging.info("✅ Connected to PostgreSQL")
+    except psycopg2.OperationalError as e:
+        logging.error("Error while getting the DB connection")
     return connection
 
 
@@ -105,11 +110,10 @@ def generate_new_csv(connection):
     if not os.path.exists(DATA_DIRECTORY):
         os.makedirs(DATA_DIRECTORY)
     else:
-        print(f"Directory '{DATA_DIRECTORY}' already exists.")
+        logging.warning(f"Directory '{DATA_DIRECTORY}' already exists.")
 
     for airport_code in GERMAN_AIRPORTS:
         csv_file = os.path.join(DATA_DIRECTORY, f"flight_status_{airport_code}_{timestamp_cet}.csv")
-        print(f"CSV file path: {csv_file}")
 
         with open(csv_file, 'w', newline='') as file:
             writer = csv.writer(file)
@@ -124,16 +128,21 @@ def generate_new_csv(connection):
             for flight in random.sample(flights_from_airport, min(5, len(flights_from_airport))):
                 flight_data = generate_flight_status(flight)
                 writer.writerow(flight_data)
-                print(f"New data added to {csv_file}")
+                logging.info(f"New data added to {csv_file}")
 
 
 def generate_files_periodically(db_conn):
     generate_new_csv(db_conn)
-    # time.sleep(random.randint(60, 300))
+    logging.info("Going to sleep mode")
+    # time.sleep(random.randint(10, 20))
+    logging.info("Generating files after a sleep")
     time.sleep(10)
 
 
 if __name__ == "__main__":
+    time.sleep(30)
+    logging.info("Getting DB connection")
     db_conn = get_db_conn()
+    logging.info("DB connection established")
     while True:
         generate_files_periodically(db_conn)
