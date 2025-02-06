@@ -6,16 +6,14 @@ from datetime import datetime
 import time
 import pytz
 import uuid
-
 import logging
 import sys
 
-# Configure logging
 logging.basicConfig(
-    level=logging.INFO,                      # Log level
-    format='%(asctime)s - %(levelname)s - %(message)s',  # Log format
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.StreamHandler(sys.stdout),  # Send logs to stdout
+        logging.StreamHandler(sys.stdout),
     ]
 )
 
@@ -109,8 +107,8 @@ def generate_new_csv(connection):
 
     if not os.path.exists(DATA_DIRECTORY):
         os.makedirs(DATA_DIRECTORY)
-    else:
-        logging.warning(f"Directory '{DATA_DIRECTORY}' already exists.")
+    # else:
+    #     logging.warning(f"Directory '{DATA_DIRECTORY}' already exists.")
 
     for airport_code in GERMAN_AIRPORTS:
         csv_file = os.path.join(DATA_DIRECTORY, f"flight_status_{airport_code}_{timestamp_cet}.csv")
@@ -133,9 +131,9 @@ def generate_new_csv(connection):
 
 def generate_files_periodically(db_conn):
     generate_new_csv(db_conn)
-    logging.info("Going to sleep mode")
+    # logging.info("Going to sleep mode")
     # time.sleep(random.randint(10, 20))
-    logging.info("Generating files after a sleep")
+    # logging.info("Generating files after a sleep")
     time.sleep(10)
 
 
