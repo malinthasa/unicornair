@@ -52,6 +52,9 @@ CREATE TABLE journey (
     FOREIGN KEY (flight_id) REFERENCES journey(flight_id) ON DELETE CASCADE
 );
 
+ALTER TABLE flight_status
+ADD CONSTRAINT unique_flight_id UNIQUE (flight_id);
+
 CREATE INDEX idx_journey_departure ON journey (departure_airport);
 CREATE INDEX idx_journey_arrival ON journey (arrival_airport);
 CREATE INDEX idx_flight_status_flight_id ON flight_status (flight_id);

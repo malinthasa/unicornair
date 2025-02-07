@@ -48,18 +48,44 @@ def process_csv_file(file_path):
         reader = csv.DictReader(csvfile)
         for row in reader:
             logging.info(f"Processing row: {row}")
-            cursor.execute('''
-                INSERT INTO flight_status (flight_id, status, timestamp, departure_airport, arrival_airport, delay_reason, delay_duration)
-                VALUES (%s, %s, %s, %s, %s, %s, %s)
-            ''', (
-                row['flight_number'],
-                row['flight_status'],
-                row['reported_at'],
-                row['departure_airport'],
-                row['arrival_airport'],
-                row['delay_reason'],
-                int(row['delay_duration']) if row['delay_duration'] else 0
-            ))
+            cursor.execute('SELECT id FROM flight_status WHERE flight_id = %s', (row['flight_number'],))
+        
+            result = cursor.fetchone()
+
+            if result:
+                logging.info(f"Updating row: {row}")
+                cursor.execute('''
+                    UPDATE flight_status
+                    SET status = %s,
+                        timestamp = %s,
+                        departure_airport = %s,
+                        arrival_airport = %s,
+                        delay_reason = %s,
+                        delay_duration = %s
+                    WHERE flight_id = %s
+                ''', (
+                    row['flight_status'],
+                    row['reported_at'],
+                    row['departure_airport'],
+                    row['arrival_airport'],
+                    row['delay_reason'],
+                    int(row['delay_duration']) if row['delay_duration'] else 0,
+                    row['flight_number']
+                ))
+            else:
+                logging.info(f"Inserting row: {row}")
+                cursor.execute('''
+                    INSERT INTO flight_status (flight_id, status, timestamp, departure_airport, arrival_airport, delay_reason, delay_duration)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s)
+                ''', (
+                    row['flight_number'],
+                    row['flight_status'],
+                    row['reported_at'],
+                    row['departure_airport'],
+                    row['arrival_airport'],
+                    row['delay_reason'],
+                    int(row['delay_duration']) if row['delay_duration'] else 0
+                ))
 
     conn.commit()
     conn.close()
@@ -68,7 +94,7 @@ def process_csv_file(file_path):
 # Watch for new CSV files and process them
 def watch_directory(interval_seconds=10):
     logging.info(f"Watching directory {WATCH_DIRECTORY}")
-    logging.info(f"Files found {os.listdir(WATCH_DIRECTORY)}")
+    # logging.info(f"Files found {os.listdir(WATCH_DIRECTORY)}")
     processed_files = set()
 
     file_count = 0
