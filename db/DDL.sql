@@ -30,13 +30,25 @@ CREATE TABLE journey (
     FOREIGN KEY (arrival_airport) REFERENCES airport(airport_code) ON DELETE CASCADE
 );
 
-CREATE TABLE flight_status (
-    status_id SERIAL PRIMARY KEY,
-    flight_id VARCHAR(20) NOT NULL,
-    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    status VARCHAR(20) CHECK (status IN ('On Time', 'Delayed', 'Departed', 'Arrived', 'Cancelled')) NOT NULL,
-    delay_reason VARCHAR(255),
-    delay_duration INTEGER DEFAULT 0,
+-- CREATE TABLE flight_status (
+--     status_id SERIAL PRIMARY KEY,
+--     flight_id VARCHAR(20) NOT NULL,
+--     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+--     status VARCHAR(20) CHECK (status IN ('On Time', 'Delayed', 'Departed', 'Arrived', 'Cancelled')) NOT NULL,
+--     delay_reason VARCHAR(255),
+--     delay_duration INTEGER DEFAULT 0,
+--     FOREIGN KEY (flight_id) REFERENCES journey(flight_id) ON DELETE CASCADE
+-- );
+
+ CREATE TABLE flight_status (
+    id SERIAL PRIMARY KEY,
+    flight_id TEXT,
+    status TEXT,
+    timestamp TIMESTAMP,
+    departure_airport TEXT,
+    arrival_airport TEXT,
+    delay_reason TEXT,
+    delay_duration INTEGER
     FOREIGN KEY (flight_id) REFERENCES journey(flight_id) ON DELETE CASCADE
 );
 

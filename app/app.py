@@ -126,7 +126,7 @@ def generate_new_csv(connection):
             for flight in random.sample(flights_from_airport, min(5, len(flights_from_airport))):
                 flight_data = generate_flight_status(flight)
                 writer.writerow(flight_data)
-                logging.info(f"New data added to {csv_file}")
+                # logging.info(f"New data added to {csv_file}")
 
 
 def generate_files_periodically(db_conn):
