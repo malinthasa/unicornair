@@ -7,8 +7,6 @@ import os
 import uuid
 import psycopg2  # PostgreSQL library
 
-print("****************************************#")
-
 DB_HOST = 'db'
 DB_PORT = '5432'
 DB_NAME = 'operations'

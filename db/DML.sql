@@ -1,35 +1,35 @@
--- SQLite
+
 INSERT INTO plane (model, manufacturer, capacity, registration_number, status) VALUES
-('A320', 'Airbus', 180, 'UA001', 'Active'),
-('A321', 'Airbus', 220, 'UA002', 'Active'),
-('B737-800', 'Boeing', 189, 'UA003', 'Active'),
-('B747-400', 'Boeing', 416, 'UA004', 'Retired'),
-('A350-900', 'Airbus', 325, 'UA005', 'Active'),
-('B787-9', 'Boeing', 296, 'UA006', 'Active'),
-('CRJ900', 'Bombardier', 90, 'UA007', 'Active'),
-('E190', 'Embraer', 100, 'UA008', 'Active'),
-('A330-300', 'Airbus', 277, 'UA009', 'Active'),
-('B777-300ER', 'Boeing', 396, 'UA010', 'Active'),
-('ATR 72', 'ATR', 72, 'UA011', 'Active'),
-('A220-300', 'Airbus', 150, 'UA012', 'Active'),
-('MD-88', 'McDonnell Douglas', 149, 'UA013', 'Retired'),
-('A310', 'Airbus', 280, 'UA014', 'Retired'),
-('B757-300', 'Boeing', 243, 'UA015', 'Under Maintenance'),
-('B767-300', 'Boeing', 269, 'UA016', 'Active'),
-('E195', 'Embraer', 124, 'UA017', 'Active'),
-('A318', 'Airbus', 132, 'UA018', 'Active'),
-('B737 MAX 8', 'Boeing', 178, 'UA019', 'Active'),
-('Superjet 100', 'Sukhoi', 98, 'UA020', 'Active'),
-('DC-9', 'McDonnell Douglas', 139, 'UA021', 'Retired'),
-('BAe 146', 'British Aerospace', 112, 'UA022', 'Retired'),
-('A340-300', 'Airbus', 295, 'UA023', 'Under Maintenance'),
-('B707', 'Boeing', 202, 'UA024', 'Retired'),
-('B737-400', 'Boeing', 168, 'UA025', 'Active'),
-('A380-800', 'Airbus', 853, 'UA026', 'Active'),
-('Tu-154', 'Tupolev', 180, 'UA027', 'Retired'),
-('Fokker 100', 'Fokker', 97, 'UA028', 'Retired'),
-('Dash 8 Q400', 'Bombardier', 78, 'UA029', 'Active'),
-('Il-96', 'Ilyushin', 262, 'UA030', 'Under Maintenance');
+    ('A320', 'Airbus', 180, 'UA001', 'Active'),
+    ('A321', 'Airbus', 220, 'UA002', 'Active'),
+    ('B737-800', 'Boeing', 189, 'UA003', 'Active'),
+    ('B747-400', 'Boeing', 416, 'UA004', 'Retired'),
+    ('A350-900', 'Airbus', 325, 'UA005', 'Active'),
+    ('B787-9', 'Boeing', 296, 'UA006', 'Active'),
+    ('CRJ900', 'Bombardier', 90, 'UA007', 'Active'),
+    ('E190', 'Embraer', 100, 'UA008', 'Active'),
+    ('A330-300', 'Airbus', 277, 'UA009', 'Active'),
+    ('B777-300ER', 'Boeing', 396, 'UA010', 'Active'),
+    ('ATR 72', 'ATR', 72, 'UA011', 'Active'),
+    ('A220-300', 'Airbus', 150, 'UA012', 'Active'),
+    ('MD-88', 'McDonnell Douglas', 149, 'UA013', 'Retired'),
+    ('A310', 'Airbus', 280, 'UA014', 'Retired'),
+    ('B757-300', 'Boeing', 243, 'UA015', 'Under Maintenance'),
+    ('B767-300', 'Boeing', 269, 'UA016', 'Active'),
+    ('E195', 'Embraer', 124, 'UA017', 'Active'),
+    ('A318', 'Airbus', 132, 'UA018', 'Active'),
+    ('B737 MAX 8', 'Boeing', 178, 'UA019', 'Active'),
+    ('Superjet 100', 'Sukhoi', 98, 'UA020', 'Active'),
+    ('DC-9', 'McDonnell Douglas', 139, 'UA021', 'Retired'),
+    ('BAe 146', 'British Aerospace', 112, 'UA022', 'Retired'),
+    ('A340-300', 'Airbus', 295, 'UA023', 'Under Maintenance'),
+    ('B707', 'Boeing', 202, 'UA024', 'Retired'),
+    ('B737-400', 'Boeing', 168, 'UA025', 'Active'),
+    ('A380-800', 'Airbus', 853, 'UA026', 'Active'),
+    ('Tu-154', 'Tupolev', 180, 'UA027', 'Retired'),
+    ('Fokker 100', 'Fokker', 97, 'UA028', 'Retired'),
+    ('Dash 8 Q400', 'Bombardier', 78, 'UA029', 'Active'),
+    ('Il-96', 'Ilyushin', 262, 'UA030', 'Under Maintenance');
 
 INSERT INTO airport (airport_code, name, city, country, timezone) VALUES
     ('OSD', 'Åre Östersund Airport', 'Östersund', 'Sweden', 'Europe/Stockholm'),
@@ -117,3 +117,13 @@ INSERT INTO airport (airport_code, name, city, country, timezone) VALUES
     ('ICN', 'Incheon International Airport', 'Seoul', 'South Korea', 'Asia/Seoul'),
     ('LHR', 'Heathrow Airport', 'London', 'United Kingdom', 'Europe/London'),
     ('CDG', 'Charles de Gaulle Airport', 'Paris', 'France', 'Europe/Paris');
+
+INSERT INTO passenger (name, email) VALUES
+('Malintha Adikari', 'malinthasa@gmail.com'),
+('Bob Johnson', 'bob@example.com'),
+('Charlie Brown', 'charlie@example.com');
+
+INSERT INTO booking (passenger_id, flight_id) VALUES
+(1, 'UAF001'),
+(2, 'UAF002'),
+(3, 'UAF003');

@@ -5,7 +5,7 @@ import time
 import plotly.express as px
 
 # API Endpoint
-API_URL = "http://localhost:5000/flights"
+API_URL = "http://api:8000/flights"
 
 # Streamlit Configuration
 st.set_page_config(page_title="UnicornAir Flight Status Dashboard", layout="wide")

@@ -3,9 +3,19 @@ import pandas as pd
 import requests
 import time
 from datetime import datetime
+import logging
+import sys
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.StreamHandler(sys.stdout),
+    ]
+)
 
 # API Endpoint
-API_URL = "http://localhost:5000/flights"
+API_URL = "http://api:8000/flights"
 
 # Streamlit Configuration
 st.set_page_config(page_title="UnicornAir Flight Info Display", layout="wide")
@@ -79,6 +89,7 @@ st.title("🛬 UnicornAir Flight Information")
 def fetch_latest_flights():
     try:
         response = requests.get(API_URL)
+        
         if response.status_code == 200:
             data = pd.DataFrame(response.json())
             return data.sort_values(by="timestamp", ascending=False).head(10)

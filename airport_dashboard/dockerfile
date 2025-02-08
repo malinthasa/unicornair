@@ -16,6 +16,6 @@ RUN poetry config virtualenvs.create false && poetry install --no-root --no-inte
 
 COPY . .
 
-EXPOSE 5000
+EXPOSE 8502
 
-CMD ["poetry", "run", "python", "statusCSVGen.py"]
+CMD ["streamlit", "run", "airport_screen.py", "--server.port=8502", "--server.address=0.0.0.0"]

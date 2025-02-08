@@ -47,7 +47,7 @@ def process_csv_file(file_path):
     with open(file_path, 'r') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
-            logging.info(f"Processing row: {row}")
+            # logging.info(f"Processing row: {row}")
             cursor.execute('SELECT id FROM flight_status WHERE flight_id = %s', (row['flight_number'],))
         
             result = cursor.fetchone()
@@ -89,7 +89,7 @@ def process_csv_file(file_path):
 
     conn.commit()
     conn.close()
-    print(f"Processed and inserted data from {file_path}")
+    # print(f"Processed and inserted data from {file_path}")
 
 # Watch for new CSV files and process them
 def watch_directory(interval_seconds=10):
@@ -101,14 +101,14 @@ def watch_directory(interval_seconds=10):
 
     while True:
         for filename in os.listdir(WATCH_DIRECTORY):
-            logging.info(f"Found file: {filename}")
+            # logging.info(f"Found file: {filename}")
             if filename.endswith(".csv") and filename not in processed_files:
                 file_path = os.path.join(WATCH_DIRECTORY, filename)
                 process_csv_file(file_path)
                 processed_files.add(filename)
                 # logging.info(f"Processed file: {filename}")
                 file_count += 1
-        logging.info(f"Sleeping for {interval_seconds}")
+        # logging.info(f"Sleeping for {interval_seconds}")
         time.sleep(interval_seconds)
 
 if __name__ == "__main__":

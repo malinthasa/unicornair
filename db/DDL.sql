@@ -1,5 +1,9 @@
 
 
+DROP TABLE IF EXISTS passenger;
+DROP TABLE IF EXISTS booking;
+DROP TABLE IF EXISTS notification;
+
 CREATE TABLE plane (
     plane_id SERIAL PRIMARY KEY,
     model VARCHAR(255) NOT NULL,
@@ -30,16 +34,6 @@ CREATE TABLE journey (
     FOREIGN KEY (arrival_airport) REFERENCES airport(airport_code) ON DELETE CASCADE
 );
 
--- CREATE TABLE flight_status (
---     status_id SERIAL PRIMARY KEY,
---     flight_id VARCHAR(20) NOT NULL,
---     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
---     status VARCHAR(20) CHECK (status IN ('On Time', 'Delayed', 'Departed', 'Arrived', 'Cancelled')) NOT NULL,
---     delay_reason VARCHAR(255),
---     delay_duration INTEGER DEFAULT 0,
---     FOREIGN KEY (flight_id) REFERENCES journey(flight_id) ON DELETE CASCADE
--- );
-
  CREATE TABLE flight_status (
     id SERIAL PRIMARY KEY,
     flight_id TEXT,
@@ -59,3 +53,30 @@ CREATE INDEX idx_journey_departure ON journey (departure_airport);
 CREATE INDEX idx_journey_arrival ON journey (arrival_airport);
 CREATE INDEX idx_flight_status_flight_id ON flight_status (flight_id);
 
+CREATE TABLE passenger (
+    passenger_id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    email TEXT UNIQUE NOT NULL
+);
+
+CREATE TABLE booking (
+    booking_id SERIAL PRIMARY KEY,
+    passenger_id INTEGER NOT NULL,
+    flight_id VARCHAR(10) NOT NULL,
+    FOREIGN KEY (passenger_id) REFERENCES passenger(passenger_id),
+    FOREIGN KEY (flight_id) REFERENCES journey(flight_id)
+);
+
+CREATE TABLE notification (
+    notification_id SERIAL PRIMARY KEY,
+    booking_id INTEGER NOT NULL,
+    flight_id VARCHAR(10) NOT NULL,
+    status TEXT CHECK (status IN ('ON_TIME', 'DELAYED', 'CANCELLED', 'DEPARTED', 'ARRIVED')) NOT NULL,
+    message TEXT NOT NULL,
+    sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (booking_id) REFERENCES booking(booking_id),
+    FOREIGN KEY (flight_id) REFERENCES journey(flight_id)
+);
+
+CREATE INDEX idx_booking_flight_id ON booking (flight_id);
+CREATE INDEX idx_notification_flight_id ON notification (flight_id);
