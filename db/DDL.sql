@@ -48,7 +48,7 @@ CREATE TABLE journey (
     departure_airport TEXT,
     arrival_airport TEXT,
     delay_reason TEXT,
-    delay_duration INTEGER
+    delay_duration INTEGER,
     FOREIGN KEY (flight_id) REFERENCES journey(flight_id) ON DELETE CASCADE
 );
 

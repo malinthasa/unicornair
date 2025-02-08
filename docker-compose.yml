@@ -37,6 +37,13 @@ services:
       - db
     volumes:
       - shared_data:/shared_data
+  api:
+    build: ./consumer_1
+    container_name: python_api
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
 
 volumes:
   postgres_data:

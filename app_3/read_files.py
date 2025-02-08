@@ -53,7 +53,7 @@ def process_csv_file(file_path):
             result = cursor.fetchone()
 
             if result:
-                logging.info(f"Updating row: {row}")
+                # logging.info(f"Updating row: {row}")
                 cursor.execute('''
                     UPDATE flight_status
                     SET status = %s,
@@ -73,7 +73,7 @@ def process_csv_file(file_path):
                     row['flight_number']
                 ))
             else:
-                logging.info(f"Inserting row: {row}")
+                # logging.info(f"Inserting row: {row}")
                 cursor.execute('''
                     INSERT INTO flight_status (flight_id, status, timestamp, departure_airport, arrival_airport, delay_reason, delay_duration)
                     VALUES (%s, %s, %s, %s, %s, %s, %s)
@@ -106,7 +106,7 @@ def watch_directory(interval_seconds=10):
                 file_path = os.path.join(WATCH_DIRECTORY, filename)
                 process_csv_file(file_path)
                 processed_files.add(filename)
-                logging.info(f"Processed file: {filename}")
+                # logging.info(f"Processed file: {filename}")
                 file_count += 1
         logging.info(f"Sleeping for {interval_seconds}")
         time.sleep(interval_seconds)
