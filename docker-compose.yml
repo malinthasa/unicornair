@@ -29,6 +29,12 @@ services:
     restart: "no"
     depends_on:
       - db
+  booking_data_gen:
+    build: ./flight_booking_mock
+    container_name: booking_data_gen
+    restart: "no"
+    depends_on:
+      - db
   flight_status_data_extract:
     build: ./flight_status_data_extract
     container_name: flight_status_data_extract

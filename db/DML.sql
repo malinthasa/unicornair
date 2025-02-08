@@ -123,7 +123,17 @@ INSERT INTO passenger (name, email) VALUES
 ('Bob Johnson', 'bob@example.com'),
 ('Charlie Brown', 'charlie@example.com');
 
-INSERT INTO booking (passenger_id, flight_id) VALUES
-(1, 'UAF001'),
-(2, 'UAF002'),
-(3, 'UAF003');
+-- INSERT INTO booking (passenger_id, flight_id) VALUES
+-- (1, 'UAF001'),
+-- (2, 'UAF002'),
+-- (3, 'UAF003');
+
+-- INSERT INTO booking (passenger_id, flight_id)
+-- SELECT p.passenger_id, j.flight_id
+-- FROM journey j
+-- JOIN passenger p ON p.email = 'malinthasa@gmail.com'
+-- WHERE NOT EXISTS (
+--     SELECT 1
+--     FROM booking b
+--     WHERE b.passenger_id = p.passenger_id AND b.flight_id = j.flight_id
+-- );
