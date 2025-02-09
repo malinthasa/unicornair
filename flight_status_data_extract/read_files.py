@@ -21,6 +21,7 @@ logging.basicConfig(
 
 # Directory inside the Docker volume
 WATCH_DIRECTORY = '/shared_data'
+processed_files = set()
 
 def get_db_conn():
     connection = None
@@ -47,13 +48,11 @@ def process_csv_file(file_path):
     with open(file_path, 'r') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
-            # logging.info(f"Processing row: {row}")
             cursor.execute('SELECT id FROM flight_status WHERE flight_id = %s', (row['flight_number'],))
         
             result = cursor.fetchone()
 
             if result:
-                # logging.info(f"Updating row: {row}")
                 cursor.execute('''
                     UPDATE flight_status
                     SET status = %s,
@@ -73,7 +72,6 @@ def process_csv_file(file_path):
                     row['flight_number']
                 ))
             else:
-                # logging.info(f"Inserting row: {row}")
                 cursor.execute('''
                     INSERT INTO flight_status (flight_id, status, timestamp, departure_airport, arrival_airport, delay_reason, delay_duration)
                     VALUES (%s, %s, %s, %s, %s, %s, %s)
@@ -89,35 +87,24 @@ def process_csv_file(file_path):
 
     conn.commit()
     conn.close()
-    # print(f"Processed and inserted data from {file_path}")
 
-# Watch for new CSV files and process them
-def watch_directory(interval_seconds=10):
-    logging.info(f"Watching directory {WATCH_DIRECTORY}")
-    # logging.info(f"Files found {os.listdir(WATCH_DIRECTORY)}")
-    processed_files = set()
 
-    file_count = 0
-
-    while True:
-        for filename in os.listdir(WATCH_DIRECTORY):
-            # logging.info(f"Found file: {filename}")
-            if filename.endswith(".csv") and filename not in processed_files:
-                file_path = os.path.join(WATCH_DIRECTORY, filename)
-                process_csv_file(file_path)
-                processed_files.add(filename)
-                # logging.info(f"Processed file: {filename}")
-                file_count += 1
-        # logging.info(f"Sleeping for {interval_seconds}")
-        time.sleep(interval_seconds)
+def watch_directory():
+    for filename in os.listdir(WATCH_DIRECTORY):
+        if filename.endswith(".csv") and filename not in processed_files:
+            file_path = os.path.join(WATCH_DIRECTORY, filename)
+            process_csv_file(file_path)
+            processed_files.add(filename)
 
 if __name__ == "__main__":
     time.sleep(60)
-    logging.info("Starting Data reading")
-    if not os.path.exists(WATCH_DIRECTORY):
-        os.makedirs(WATCH_DIRECTORY)
-        logging.info(f"Directory {WATCH_DIRECTORY} created.")
-    else:
-        logging.info(f"Directory {WATCH_DIRECTORY} already exists.")
+    interval_seconds = 600
+    while True:
+        time.sleep(interval_seconds)
+        if not os.path.exists(WATCH_DIRECTORY):
+            os.makedirs(WATCH_DIRECTORY)
+            logging.info(f"Directory {WATCH_DIRECTORY} created.")
+        else:
+            logging.info(f"Directory {WATCH_DIRECTORY} already exists.")
 
-    watch_directory()
+        watch_directory()

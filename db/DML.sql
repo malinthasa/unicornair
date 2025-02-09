@@ -118,22 +118,53 @@ INSERT INTO airport (airport_code, name, city, country, timezone) VALUES
     ('LHR', 'Heathrow Airport', 'London', 'United Kingdom', 'Europe/London'),
     ('CDG', 'Charles de Gaulle Airport', 'Paris', 'France', 'Europe/Paris');
 
-INSERT INTO passenger (name, email) VALUES
-('Malintha Adikari', 'malinthasa@gmail.com'),
-('Bob Johnson', 'bob@example.com'),
-('Charlie Brown', 'charlie@example.com');
-
--- INSERT INTO booking (passenger_id, flight_id) VALUES
--- (1, 'UAF001'),
--- (2, 'UAF002'),
--- (3, 'UAF003');
-
--- INSERT INTO booking (passenger_id, flight_id)
--- SELECT p.passenger_id, j.flight_id
--- FROM journey j
--- JOIN passenger p ON p.email = 'malinthasa@gmail.com'
--- WHERE NOT EXISTS (
---     SELECT 1
---     FROM booking b
---     WHERE b.passenger_id = p.passenger_id AND b.flight_id = j.flight_id
--- );
+INSERT INTO passenger (name, email, passport_number, phone_number, address, country, city, postal_code) VALUES
+('Malintha Adikari', 'malinthasa@gmail.com', 'P0000001', '+12345678901', '1st street', 'Germany', 'Munich', '820000'),
+('John Doe', 'john.doe1@example.com', 'P1234561', '+12345678901', '123 Main St', 'USA', 'New York', '10001'),
+('Jane Smith', 'jane.smith2@example.com', 'P1234562', '+12345678902', '456 Elm St', 'USA', 'Los Angeles', '90001'),
+('Michael Brown', 'michael.brown3@example.com', 'P1234563', '+12345678903', '789 Oak St', 'Canada', 'Toronto', 'M4B1B3'),
+('Emily Davis', 'emily.davis4@example.com', 'P1234564', '+12345678904', '321 Pine St', 'UK', 'London', 'EC1A1BB'),
+('Chris Wilson', 'chris.wilson5@example.com', 'P1234565', '+12345678905', '654 Maple St', 'Australia', 'Sydney', '2000'),
+('Olivia Johnson', 'olivia.johnson6@example.com', 'P1234566', '+12345678906', '987 Cedar St', 'Germany', 'Berlin', '10115'),
+('Daniel Martinez', 'daniel.martinez7@example.com', 'P1234567', '+12345678907', '111 Birch St', 'France', 'Paris', '75001'),
+('Sophia Garcia', 'sophia.garcia8@example.com', 'P1234568', '+12345678908', '222 Spruce St', 'Italy', 'Rome', '00100'),
+('James Lee', 'james.lee9@example.com', 'P1234569', '+12345678909', '333 Fir St', 'Japan', 'Tokyo', '100-0001'),
+('Mia Hernandez', 'mia.hernandez10@example.com', 'P1234570', '+12345678910', '444 Ash St', 'China', 'Beijing', '100000'),
+('William Clark', 'william.clark11@example.com', 'P1234571', '+12345678911', '555 Chestnut St', 'Brazil', 'Sao Paulo', '01000-000'),
+('Ava Lewis', 'ava.lewis12@example.com', 'P1234572', '+12345678912', '666 Poplar St', 'India', 'Mumbai', '400001'),
+('Benjamin Robinson', 'benjamin.robinson13@example.com', 'P1234573', '+12345678913', '777 Willow St', 'Russia', 'Moscow', '101000'),
+('Isabella Walker', 'isabella.walker14@example.com', 'P1234574', '+12345678914', '888 Redwood St', 'Spain', 'Madrid', '28001'),
+('Lucas Young', 'lucas.young15@example.com', 'P1234575', '+12345678915', '999 Cypress St', 'Mexico', 'Mexico City', '01000'),
+('Charlotte Hall', 'charlotte.hall16@example.com', 'P1234576', '+12345678916', '123 Aspen St', 'South Korea', 'Seoul', '04524'),
+('Henry Allen', 'henry.allen17@example.com', 'P1234577', '+12345678917', '234 Alder St', 'Netherlands', 'Amsterdam', '1011'),
+('Amelia King', 'amelia.king18@example.com', 'P1234578', '+12345678918', '345 Hawthorn St', 'Sweden', 'Stockholm', '11120'),
+('Logan Wright', 'logan.wright19@example.com', 'P1234579', '+12345678919', '456 Beech St', 'Norway', 'Oslo', '0150'),
+('Ella Scott', 'ella.scott20@example.com', 'P1234580', '+12345678920', '567 Dogwood St', 'Denmark', 'Copenhagen', '1000'),
+('Alexander Green', 'alexander.green21@example.com', 'P1234581', '+12345678921', '678 Magnolia St', 'Portugal', 'Lisbon', '1100-001'),
+('Grace Adams', 'grace.adams22@example.com', 'P1234582', '+12345678922', '789 Palm St', 'Poland', 'Warsaw', '00-001'),
+('Jack Baker', 'jack.baker23@example.com', 'P1234583', '+12345678923', '890 Sycamore St', 'Greece', 'Athens', '10558'),
+('Chloe Nelson', 'chloe.nelson24@example.com', 'P1234584', '+12345678924', '901 Hickory St', 'Turkey', 'Istanbul', '34100'),
+('Sebastian Carter', 'sebastian.carter25@example.com', 'P1234585', '+12345678925', '101 Juniper St', 'Switzerland', 'Zurich', '8001'),
+('Alice Johnson', 'alice.johnson@example.com', 'C11223344', '+441234567890', '789 Oak St', 'UK', 'London', 'SW1A 1AA'),
+('Bob Brown', 'bob.brown@example.com', 'D99887766', '+61412345678', '321 Pine St', 'Australia', 'Sydney', '2000'),
+('Charlie Davis', 'charlie.davis@example.com', 'E55443322', '+33123456789', '654 Birch St', 'France', 'Paris', '75001'),
+('Diana Evans', 'diana.evans@example.com', 'F66778899', '+49876543210', '987 Cedar St', 'Germany', 'Berlin', '10115'),
+('Ethan Green', 'ethan.green@example.com', 'G33445566', '+390123456789', '159 Maple St', 'Italy', 'Rome', '00118'),
+('Fiona Harris', 'fiona.harris@example.com', 'H77889900', '+81312345678', '753 Walnut St', 'Japan', 'Tokyo', '100-0001'),
+('George Clark', 'george.clark@example.com', 'I44556677', '+8613712345678', '852 Cherry St', 'China', 'Beijing', '100000'),
+('Hannah Lewis', 'hannah.lewis@example.com', 'J22334455', '+911123456789', '456 Peach St', 'India', 'Mumbai', '400001'),
+('Ian Walker', 'ian.walker@example.com', 'K99887766', '+525512345678', '753 Plum St', 'Mexico', 'Mexico City', '06000'),
+('Julia Hall', 'julia.hall@example.com', 'L11223344', '+27111234567', '159 Orange St', 'South Africa', 'Johannesburg', '2000'),
+('Kevin Young', 'kevin.young@example.com', 'M55667788', '+551112345678', '852 Lemon St', 'Brazil', 'São Paulo', '01000-000'),
+('Laura Allen', 'laura.allen@example.com', 'N33445566', '+61234567890', '753 Lime St', 'Australia', 'Melbourne', '3000'),
+('Michael King', 'michael.king@example.com', 'O77889900', '+34911234567', '456 Grape St', 'Spain', 'Madrid', '28001'),
+('Nina Wright', 'nina.wright@example.com', 'P44556677', '+39123456789', '159 Apple St', 'Italy', 'Milan', '20121'),
+('Oscar Scott', 'oscar.scott@example.com', 'Q22334455', '+442071234567', '852 Banana St', 'UK', 'Manchester', 'M1 1AB'),
+('Paula Adams', 'paula.adams@example.com', 'R99887766', '+61234567890', '753 Pear St', 'Australia', 'Brisbane', '4000'),
+('Quincy Baker', 'quincy.baker@example.com', 'S11223344', '+14161234567', '456 Kiwi St', 'USA', 'Chicago', '60601'),
+('Rachel Carter', 'rachel.carter@example.com', 'T55667788', '+33123456789', '159 Mango St', 'France', 'Lyon', '69001'),
+('Samuel Perez', 'samuel.perez@example.com', 'U33445566', '+525512345678', '852 Papaya St', 'Mexico', 'Guadalajara', '44100'),
+('Tina Roberts', 'tina.roberts@example.com', 'V77889900', '+27111234567', '753 Guava St', 'South Africa', 'Cape Town', '8001'),
+('Victor Turner', 'victor.turner@example.com', 'W44556677', '+551112345678', '456 Melon St', 'Brazil', 'Rio de Janeiro', '20040-000'),
+('Wendy Phillips', 'wendy.phillips@example.com', 'X22334455', '+61234567890', '159 Berry St', 'Australia', 'Perth', '6000'),
+('Xander Evans', 'xander.evans@example.com', 'Y99887766', '+49876543210', '852 Fig St', 'Germany', 'Hamburg', '20095');

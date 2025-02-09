@@ -56,15 +56,21 @@ CREATE INDEX idx_flight_status_flight_id ON flight_status (flight_id);
 CREATE TABLE passenger (
     passenger_id SERIAL PRIMARY KEY,
     name TEXT NOT NULL,
-    email TEXT UNIQUE NOT NULL
+    email TEXT UNIQUE NOT NULL,
+    passport_number TEXT UNIQUE NOT NULL,
+    phone_number VARCHAR(15),
+    address VARCHAR(100),
+    country VARCHAR(50),
+    city VARCHAR(50),
+    postal_code VARCHAR(20)
 );
 
 CREATE TABLE booking (
     booking_id SERIAL PRIMARY KEY,
     passenger_id INTEGER NOT NULL,
     flight_id VARCHAR(10) NOT NULL,
-    FOREIGN KEY (passenger_id) REFERENCES passenger(passenger_id),
-    FOREIGN KEY (flight_id) REFERENCES journey(flight_id)
+    FOREIGN KEY (passenger_id) REFERENCES passenger(passenger_id) ON DELETE CASCADE,
+    FOREIGN KEY (flight_id) REFERENCES journey(flight_id) ON DELETE CASCADE
 );
 
 CREATE TABLE notification (
@@ -74,8 +80,8 @@ CREATE TABLE notification (
     status TEXT CHECK (status IN ('ON_TIME', 'DELAYED', 'CANCELLED', 'DEPARTED', 'ARRIVED')) NOT NULL,
     message TEXT NOT NULL,
     sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (booking_id) REFERENCES booking(booking_id),
-    FOREIGN KEY (flight_id) REFERENCES journey(flight_id)
+    FOREIGN KEY (booking_id) REFERENCES booking(booking_id) ON DELETE CASCADE,
+    FOREIGN KEY (flight_id) REFERENCES journey(flight_id) ON DELETE CASCADE
 );
 
 CREATE INDEX idx_booking_flight_id ON booking (flight_id);

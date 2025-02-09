@@ -2,7 +2,6 @@ import psycopg2
 import requests
 import smtplib
 from email.mime.text import MIMEText
-from datetime import datetime
 import time
 import logging
 import sys

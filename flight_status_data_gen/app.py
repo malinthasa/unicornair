@@ -17,6 +17,7 @@ logging.basicConfig(
     ]
 )
 
+# Get from a .env file during the deployment
 DB_HOST = 'db'
 DB_PORT = '5432'
 DB_NAME = 'operations'
@@ -107,8 +108,6 @@ def generate_new_csv(connection):
 
     if not os.path.exists(DATA_DIRECTORY):
         os.makedirs(DATA_DIRECTORY)
-    # else:
-    #     logging.warning(f"Directory '{DATA_DIRECTORY}' already exists.")
 
     for airport_code in GERMAN_AIRPORTS:
         csv_file = os.path.join(DATA_DIRECTORY, f"flight_status_{airport_code}_{timestamp_cet}.csv")
@@ -126,21 +125,15 @@ def generate_new_csv(connection):
             for flight in random.sample(flights_from_airport, min(5, len(flights_from_airport))):
                 flight_data = generate_flight_status(flight)
                 writer.writerow(flight_data)
-                # logging.info(f"New data added to {csv_file}")
 
 
 def generate_files_periodically(db_conn):
     generate_new_csv(db_conn)
-    # logging.info("Going to sleep mode")
-    # time.sleep(random.randint(10, 20))
-    # logging.info("Generating files after a sleep")
-    time.sleep(10)
 
 
 if __name__ == "__main__":
     time.sleep(30)
-    logging.info("Getting DB connection")
     db_conn = get_db_conn()
-    logging.info("DB connection established")
     while True:
+        time.sleep(300)
         generate_files_periodically(db_conn)
