@@ -94,11 +94,12 @@ def watch_directory():
         if filename.endswith(".csv") and filename not in processed_files:
             file_path = os.path.join(WATCH_DIRECTORY, filename)
             process_csv_file(file_path)
-            processed_files.add(filename)
+            processed_files.add(filename)   
 
 if __name__ == "__main__":
+    logging.info(f"Watching directory {WATCH_DIRECTORY}")
     time.sleep(60)
-    interval_seconds = 600
+    interval_seconds = 60
     while True:
         time.sleep(interval_seconds)
         if not os.path.exists(WATCH_DIRECTORY):
