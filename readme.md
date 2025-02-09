@@ -17,3 +17,5 @@ Docker Clean
 8. Remove all volumes - `docker volume prune -f`
 
 Single command - `docker system prune -a --volumes -f`
+
+Deploying Kafka with KRaft with Docker: https://dev.to/deeshath/apache-kafka-kraft-mode-setup-5nj

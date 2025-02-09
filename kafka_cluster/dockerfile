@@ -1,0 +1,35 @@
+# Use the official Confluent Kafka image
+FROM confluentinc/cp-kafka:7.5.0
+
+COPY kafka.properties /etc/kafka/kafka.properties
+
+# Set environment variables for KRaft mode
+ENV KAFKA_PROCESS_ROLES=broker,controller \
+    KAFKA_CONTROLLER_QUORUM_VOTERS=1@localhost:9093 \
+    KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093 \
+    KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092 \
+    KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT \
+    KAFKA_CONTROLLER_LISTENER_NAMES=CONTROLLER \
+    KAFKA_INTER_BROKER_LISTENER_NAME=PLAINTEXT \
+    KAFKA_BROKER_ID=1 \
+    KAFKA_LOG_DIRS=/tmp/kraft-combined-logs \
+    KAFKA_AUTO_CREATE_TOPICS_ENABLE=true \
+    CLUSTER_ID=m4cP7I9-QzGiG47Hd7oUEA
+
+# Ensure correct permissions for the data directory
+RUN mkdir -p /tmp/kraft-combined-logs && \
+    chown -R 1000:1000 /tmp/kraft-combined-logs
+
+# Run Kafka as user with UID 1000
+USER 1000
+
+# Expose necessary ports
+EXPOSE 9092 9093
+
+# Initialize KRaft metadata if not already formatted, then start Kafka
+CMD bash -c "\
+    if [ ! -f /tmp/kraft-combined-logs/meta.properties ]; then \
+        echo '📦 Initializing KRaft metadata...'; \
+        kafka-storage format --cluster-id ${CLUSTER_ID} --config /etc/kafka/kafka.properties; \
+    fi && \
+    /etc/confluent/docker/run"

@@ -1,6 +1,9 @@
 version: '3.8'
 
 services:
+# Infastructure
+
+  # Postgresql DB
   db:
     build: ./db
     container_name: operations_db
@@ -14,65 +17,94 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-  flight_status_data_gen:
-    build: ./flight_status_data_gen
-    container_name: flight_status_data_gen
-    restart: always
-    depends_on:
-      - db
+  # Kafka cluster
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    hostname: kafka
+    container_name: kafka
+    ports:
+      - "9092:9092"
+      - "9093:9093"
+    environment:
+      KAFKA_KRAFT_MODE: "true"
+      KAFKA_PROCESS_ROLES: controller,broker
+      KAFKA_NODE_ID: 1
+      KAFKA_CONTROLLER_QUORUM_VOTERS: "1@localhost:9093"
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_LOG_DIRS: /var/lib/kafka/data
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_LOG_RETENTION_HOURS: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      CLUSTER_ID: "Mk3OEYBSD34fcwNTJENDM2Qk"
     volumes:
-      - shared_data:/shared_data
+      - kafka-data:/var/lib/kafka/data
 
-  jouney_data_gen:
-    build: ./journey_generator
-    container_name: jouney_data_gen
-    restart: "no"
-    depends_on:
-      - db
-  booking_data_gen:
-    build: ./flight_booking_mock
-    container_name: booking_data_gen
-    restart: "no"
-    depends_on:
-      - db
-  flight_status_data_extract:
-    build: ./flight_status_data_extract
-    container_name: flight_status_data_extract
-    restart: "no"
-    depends_on:
-      - db
-    volumes:
-      - shared_data:/shared_data
-  api:
-    build: ./flight_status_api
-    container_name: python_api
-    ports:
-      - "8000:8000"
-    depends_on:
-      - db
-  internal_dashboard:
-    build:
-      context: ./internal_dashboard
-    container_name: internal_dashboard
-    ports:
-      - "8501:8501"
-    depends_on:
-      - flight_status_data_extract
+  # Services
+  # flight_status_data_gen:
+  #   build: ./flight_status_data_gen
+  #   container_name: flight_status_data_gen
+  #   restart: always
+  #   depends_on:
+  #     - db
+  #   volumes:
+  #     - shared_data:/shared_data
 
-  airport_dashboard:
-    build:
-      context: ./airport_dashboard
-    container_name: airport_dashboard
-    ports:
-      - "8502:8502"
-    depends_on:
-      - flight_status_data_extract
-  customer_notifier:
-    build: ./customer_notifier
-    container_name: customer_notifier
-    depends_on:
-      - api
+  # jouney_data_gen:
+  #   build: ./journey_generator
+  #   container_name: jouney_data_gen
+  #   restart: "no"
+  #   depends_on:
+  #     - db
+  # booking_data_gen:
+  #   build: ./flight_booking_mock
+  #   container_name: booking_data_gen
+  #   restart: "no"
+  #   depends_on:
+  #     - db
+  # flight_status_data_extract:
+  #   build: ./flight_status_data_extract
+  #   container_name: flight_status_data_extract
+  #   restart: "no"
+  #   depends_on:
+  #     - db
+  #   volumes:
+  #     - shared_data:/shared_data
+  # api:
+  #   build: ./flight_status_api
+  #   container_name: python_api
+  #   ports:
+  #     - "8000:8000"
+  #   depends_on:
+  #     - db
+  # internal_dashboard:
+  #   build:
+  #     context: ./internal_dashboard
+  #   container_name: internal_dashboard
+  #   ports:
+  #     - "8501:8501"
+  #   depends_on:
+  #     - flight_status_data_extract
+
+  # airport_dashboard:
+  #   build:
+  #     context: ./airport_dashboard
+  #   container_name: airport_dashboard
+  #   ports:
+  #     - "8502:8502"
+  #   depends_on:
+  #     - flight_status_data_extract
+  # customer_notifier:
+  #   build: ./customer_notifier
+  #   container_name: customer_notifier
+  #   depends_on:
+  #     - api
 
 volumes:
   postgres_data:
   shared_data:
+  kafka-data:
