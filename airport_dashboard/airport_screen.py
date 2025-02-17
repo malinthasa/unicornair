@@ -15,7 +15,7 @@ logging.basicConfig(
 )
 
 # API Endpoint
-API_URL = "http://api:8000/flights"
+API_URL = "http://flight_status_api:8000/flights"
 
 # Streamlit Configuration
 st.set_page_config(page_title="UnicornAir Flight Info Display", layout="wide")

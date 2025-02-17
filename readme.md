@@ -17,3 +17,5 @@ Docker Clean
 8. Remove all volumes - `docker volume prune -f`
 
 Single command - `docker system prune -a --volumes -f`
+
+1. Take all Schedules

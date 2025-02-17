@@ -24,7 +24,7 @@ def get_db_connection():
     return conn
 
 class FlightStatus(BaseModel):
-    flight_id: str
+    flight_id: int
     status: str
     timestamp: datetime   # Change from str to datetime
     departure_airport: str
@@ -43,7 +43,15 @@ def get_flights(
     conn = get_db_connection()
     cursor = conn.cursor()
 
-    query = "SELECT flight_id, status, timestamp, departure_airport, arrival_airport, delay_reason, delay_duration FROM flight_status WHERE 1=1"
+    query = """select f.id,fs.status, fs."timestamp", da.name, aa.name, fs.delay_reason, fs.delay_duration 
+                from flight_status fs
+                inner join flight f 
+                on f.id = fs.flight_id
+                inner join airport da 
+                on da.id = f.departure_airport
+                inner join airport aa
+                on aa.id = f.arrival_airport;
+            """
     params = []
 
     if status:

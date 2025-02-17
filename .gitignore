@@ -2,3 +2,4 @@ data/flight_status/
 *.pyc
 data/operations_db/flight.db-*
 deprecated/
+research/

@@ -1,0 +1,13 @@
+airport
+- id (auto gen)
+- ident
+- name
+- elevation
+- continent
+- contry_code
+- region_code
+- city
+- gps_code
+- iata_code
+- location_lat
+- location_lon

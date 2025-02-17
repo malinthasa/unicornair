@@ -1,3 +1,5 @@
+# Description: This script generates flight status data for German airports and writes them to CSV files.
+
 import os
 import psycopg2
 import csv
@@ -8,6 +10,7 @@ import pytz
 import uuid
 import logging
 import sys
+import pandas as pd
 
 logging.basicConfig(
     level=logging.INFO,
@@ -24,15 +27,6 @@ DB_NAME = 'operations'
 DB_USER = 'unicorn_admin'
 DB_PASSWORD = 'unicorn_password'
 
-STATUS_OPTIONS = ["ON_TIME"] * 60 + ["DELAYED"] * 20 + ["DEPARTED"] * 15 + ["ARRIVED"] * 4 + ["CANCELLED"] * 1
-DELAY_REASONS = ["Weather", "Technical Issue", "Air Traffic", "Crew Unavailability", ""]
-IATA_DELAY_CODES = {
-        "Weather": "86",
-        "Technical Issue": "31",
-        "Air Traffic": "93",
-        "Crew Unavailability": "64",
-        "": "00"
-    }
 
 def get_db_conn():
     connection = None
@@ -50,90 +44,75 @@ def get_db_conn():
     return connection
 
 
-def generate_flight_status(flight):
-    message_id = str(uuid.uuid4())
-    flight_id, departure_airport, arrival_airport, scheduled_departure, scheduled_arrival = flight
-    current_time = datetime.utcnow()
+def initiate_all_flights():
+    conn = get_db_conn()
+    cursor = conn.cursor()
+    scheduled_flight_update = """INSERT INTO flight_status (flight_id, status, timestamp)
+                                 SELECT id, 'Ontime', NOW()
+                                 FROM flight"""
+    cursor.execute(scheduled_flight_update)
+    conn.commit()
+    conn.close()
 
-    if current_time < scheduled_departure:
-        status = "ON_TIME"
-    elif scheduled_departure <= current_time < scheduled_arrival:
-        status = random.choices(["DEPARTED", "DELAYED", "ON_TIME"], [70, 20, 10])[0]
-    else:
-        status = random.choices(["ARRIVED", "DELAYED", "CANCELLED"], [85, 10, 5])[0]
+def get_flights_by_airport():
+    conn = get_db_conn()
 
-    delay_reason = random.choice(DELAY_REASONS) if status == "DELAYED" else ""
-    delay_code = IATA_DELAY_CODES.get(delay_reason, "00")
-    delay_duration = random.randint(15, 180) if status == "DELAYED" else 0
-    reported_by = random.choice(["AODB", "Ops Staff"])
-    reported_at = current_time.isoformat()
-    remarks = delay_reason if delay_reason else "N/A"
+    all_flights_query = """
+                        SELECT fs.flight_id, fs.status, f.departure_airport, f.scheduled_departure 
+                        FROM flight_status fs 
+                        INNER JOIN flight f on f.id=fs.flight_id;
+                        """
+    all_flights = pd.read_sql(all_flights_query, conn)
+    airport_flight_groups = all_flights.groupby("departure_airport")
 
-    return [
-        message_id,
-        flight_id,
-        departure_airport,
-        arrival_airport,
-        scheduled_departure,
-        scheduled_arrival,
-        status,
-        delay_code,
-        delay_reason,
-        delay_duration,
-        reported_by,
-        reported_at,
-        remarks
-    ]
 
-# Generate a new CSV file for each German airport
-def generate_new_csv(connection):
-    cet_timezone = pytz.timezone('CET')
-    timestamp_cet = datetime.now(cet_timezone).strftime("%Y%m%d_%H%M%S")
+def make_delayed_flight():
+    conn = get_db_conn()
+    all_flights_query = """
+                    SELECT fs.flight_id, fs.status, fs.timestamp, fs.delay_reason, fs.delay_duration, f.scheduled_departure, da.iata_code as departure_airport, aa.iata_code as arrival_airport 
+                    FROM flight_status fs 
+                    INNER JOIN flight f on f.id=fs.flight_id
+                    INNER JOIN airport da on da.id=f.departure_airport
+                    INNER JOIN airport aa on aa.id=f.arrival_airport;
+                    """
 
-    # cursor = connection.cursor()
-    with connection.cursor() as cursor:
-        cursor.execute("SELECT airport_code FROM airport WHERE country = 'Germany'")
-        GERMAN_AIRPORTS = [row[0] for row in cursor.fetchall()]
+    all_flights = pd.read_sql(all_flights_query, conn)
+    on_time_flights = list(all_flights[all_flights['status'] == 'Ontime']['flight_id'])
+    conn.close()
 
-    # Fetch all flights scheduled for today
-    with connection.cursor() as cursor:
-        cursor.execute("""
-            SELECT flight_id, departure_airport, arrival_airport, scheduled_departure, scheduled_arrival
-            FROM journey
-            WHERE DATE(scheduled_departure) = CURRENT_DATE
-        """)
-        FLIGHTS = cursor.fetchall()
+    DELAY_REASONS = ["Weather", "Technical Issue", "Air Traffic", "Crew Unavailability"]
+    DELAY_TIMES = [30, 45, 60, 75, 90, 120, 150, 180]
+
+    selected_flight = random.choice(on_time_flights)
+
+    delayed_reason = random.choice(DELAY_REASONS)
+    delayed_time = random.choice(DELAY_TIMES)
+
+    all_flights.loc[all_flights['flight_id']==selected_flight, ['status', 'delay_duration', 'delay_reason']]=['Delayed', delayed_time, delayed_reason]
+
+    return all_flights
+
+def upload_to_airline(all_flight_status):
 
     DATA_DIRECTORY = "/shared_data"
 
     if not os.path.exists(DATA_DIRECTORY):
         os.makedirs(DATA_DIRECTORY)
 
-    for airport_code in GERMAN_AIRPORTS:
-        csv_file = os.path.join(DATA_DIRECTORY, f"flight_status_{airport_code}_{timestamp_cet}.csv")
+    airport_flight_groups = all_flight_status.groupby("departure_airport")
 
-        with open(csv_file, 'w', newline='') as file:
-            writer = csv.writer(file)
-            writer.writerow([
-                "message_id", "flight_number", "departure_airport", "arrival_airport",
-                "scheduled_departure", "scheduled_arrival", "flight_status",
-                "delay_code", "delay_reason", "delay_duration", "reported_by", "reported_at", "remarks"
-            ])
-
-            flights_from_airport = [f for f in FLIGHTS if f[1] == airport_code]
-
-            for flight in random.sample(flights_from_airport, min(5, len(flights_from_airport))):
-                flight_data = generate_flight_status(flight)
-                writer.writerow(flight_data)
-
-
-def generate_files_periodically(db_conn):
-    generate_new_csv(db_conn)
-
+    for  airport, flight_group in airport_flight_groups:
+        cet_timezone = pytz.timezone('CET')
+        timestamp_cet = datetime.now(cet_timezone).strftime("%Y%m%d_%H%M%S")
+        csv_file_name = f"{DATA_DIRECTORY}/flight_status_{airport}_{timestamp_cet}.csv"
+        # print(flight_group.columns)
+        flight_group.to_csv(csv_file_name, index=False)
 
 if __name__ == "__main__":
-    time.sleep(30)
-    db_conn = get_db_conn()
+    time.sleep(60)
+    initiate_all_flights()
     while True:
-        time.sleep(300)
-        generate_files_periodically(db_conn)
+        time.sleep(60)
+        manipulated_flight_status_df = make_delayed_flight()
+        upload_to_airline(manipulated_flight_status_df)
+        print("✅ Uploaded to airline")
