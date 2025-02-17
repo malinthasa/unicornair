@@ -19,6 +19,12 @@ services:
     restart: "no"
     depends_on:
       - db
+    environment:
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_NAME=${DB_NAME}
 
   flight_status_data_gen:
     build: ./flight_status_data_gen
@@ -28,6 +34,12 @@ services:
       - flight_data_gen
     volumes:
       - shared_data:/shared_data
+    environment:
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_NAME=${DB_NAME}
 
   flight_status_data_extract:
     build: ./flight_status_data_extract
@@ -37,6 +49,12 @@ services:
       - flight_status_data_gen
     volumes:
       - shared_data:/shared_data
+    environment:
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_NAME=${DB_NAME}
 
   booking_data_gen:
     build: ./flight_booking_mock
@@ -44,7 +62,13 @@ services:
     restart: "no"
     depends_on:
       - flight_data_gen
-
+    environment:
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_NAME=${DB_NAME}
+      
   flight_status_api:
     build: ./flight_status_api
     container_name: flight_status_api
@@ -52,6 +76,12 @@ services:
       - "8000:8000"
     depends_on:
       - flight_status_data_extract
+    environment:
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_NAME=${DB_NAME}
 
   internal_dashboard:
     build:
@@ -61,6 +91,12 @@ services:
       - "8501:8501"
     depends_on:
       - flight_status_api
+    environment:
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_NAME=${DB_NAME}
 
   airport_dashboard:
     build:
@@ -76,6 +112,12 @@ services:
   #   container_name: customer_notifier
   #   depends_on:
   #     - flight_status_api
+  #   environment:
+  #     - DB_USER=${DB_USER}
+  #     - DB_PASSWORD=${DB_PASSWORD}
+  #     - DB_HOST=${DB_HOST}
+  #     - DB_PORT=${DB_PORT}
+  #     - DB_NAME=${DB_NAME}
 
 volumes:
   postgres_data:

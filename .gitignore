@@ -3,3 +3,5 @@ data/flight_status/
 data/operations_db/flight.db-*
 deprecated/
 research/
+.git/
+.env

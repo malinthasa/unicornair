@@ -5,11 +5,11 @@ import time
 import logging
 import sys
 
-DB_HOST = 'db'
-DB_PORT = '5432'
-DB_NAME = 'operations'
-DB_USER = 'unicorn_admin'
-DB_PASSWORD = 'unicorn_password'
+DB_HOST = os.getenv('DB_HOST')
+DB_PORT = os.getenv('DB_PORT')
+DB_NAME = os.getenv('DB_NAME')
+DB_USER = os.getenv('DB_USER')
+DB_PASSWORD = os.getenv('DB_PASSWORD')
 
 logging.basicConfig(
         level=logging.INFO,
