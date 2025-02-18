@@ -13,99 +13,99 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-  flight_data_gen:
-    build: ./flight_generator
-    container_name: flight_data_gen
-    restart: "no"
-    depends_on:
-      - db
-    environment:
-      - DB_USER=${DB_USER}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - DB_HOST=${DB_HOST}
-      - DB_PORT=${DB_PORT}
-      - DB_NAME=${DB_NAME}
+  # flight_data_gen:
+  #   build: ./flight_generator
+  #   container_name: flight_data_gen
+  #   restart: "no"
+  #   depends_on:
+  #     - db
+  #   environment:
+  #     - DB_USER=${DB_USER}
+  #     - DB_PASSWORD=${DB_PASSWORD}
+  #     - DB_HOST=${DB_HOST}
+  #     - DB_PORT=${DB_PORT}
+  #     - DB_NAME=${DB_NAME}
 
-  flight_status_data_gen:
-    build: ./flight_status_data_gen
-    container_name: flight_status_data_gen
-    restart: always
-    depends_on:
-      - flight_data_gen
-    volumes:
-      - shared_data:/shared_data
-    environment:
-      - DB_USER=${DB_USER}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - DB_HOST=${DB_HOST}
-      - DB_PORT=${DB_PORT}
-      - DB_NAME=${DB_NAME}
+  # flight_status_data_gen:
+  #   build: ./flight_status_data_gen
+  #   container_name: flight_status_data_gen
+  #   restart: always
+  #   depends_on:
+  #     - flight_data_gen
+  #   volumes:
+  #     - shared_data:/shared_data
+  #   environment:
+  #     - DB_USER=${DB_USER}
+  #     - DB_PASSWORD=${DB_PASSWORD}
+  #     - DB_HOST=${DB_HOST}
+  #     - DB_PORT=${DB_PORT}
+  #     - DB_NAME=${DB_NAME}
 
-  flight_status_data_extract:
-    build: ./flight_status_data_extract
-    container_name: flight_status_data_extract
-    restart: always
-    depends_on:
-      - flight_status_data_gen
-    volumes:
-      - shared_data:/shared_data
-    environment:
-      - DB_USER=${DB_USER}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - DB_HOST=${DB_HOST}
-      - DB_PORT=${DB_PORT}
-      - DB_NAME=${DB_NAME}
+  # flight_status_data_extract:
+  #   build: ./flight_status_data_extract
+  #   container_name: flight_status_data_extract
+  #   restart: always
+  #   depends_on:
+  #     - flight_status_data_gen
+  #   volumes:
+  #     - shared_data:/shared_data
+  #   environment:
+  #     - DB_USER=${DB_USER}
+  #     - DB_PASSWORD=${DB_PASSWORD}
+  #     - DB_HOST=${DB_HOST}
+  #     - DB_PORT=${DB_PORT}
+  #     - DB_NAME=${DB_NAME}
 
-  booking_data_gen:
-    build: ./flight_booking_mock
-    container_name: booking_data_gen
-    restart: "no"
-    depends_on:
-      - flight_data_gen
-    environment:
-      - DB_USER=${DB_USER}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - DB_HOST=${DB_HOST}
-      - DB_PORT=${DB_PORT}
-      - DB_NAME=${DB_NAME}
+  # booking_data_gen:
+  #   build: ./flight_booking_mock
+  #   container_name: booking_data_gen
+  #   restart: "no"
+  #   depends_on:
+  #     - flight_data_gen
+  #   environment:
+  #     - DB_USER=${DB_USER}
+  #     - DB_PASSWORD=${DB_PASSWORD}
+  #     - DB_HOST=${DB_HOST}
+  #     - DB_PORT=${DB_PORT}
+  #     - DB_NAME=${DB_NAME}
       
-  flight_status_api:
-    build: ./flight_status_api
-    container_name: flight_status_api
-    ports:
-      - "8000:8000"
-    depends_on:
-      - flight_status_data_extract
-    environment:
-      - DB_USER=${DB_USER}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - DB_HOST=${DB_HOST}
-      - DB_PORT=${DB_PORT}
-      - DB_NAME=${DB_NAME}
+  # flight_status_api:
+  #   build: ./flight_status_api
+  #   container_name: flight_status_api
+  #   ports:
+  #     - "8000:8000"
+  #   depends_on:
+  #     - flight_status_data_extract
+  #   environment:
+  #     - DB_USER=${DB_USER}
+  #     - DB_PASSWORD=${DB_PASSWORD}
+  #     - DB_HOST=${DB_HOST}
+  #     - DB_PORT=${DB_PORT}
+  #     - DB_NAME=${DB_NAME}
 
-  internal_dashboard:
-    build:
-      context: ./internal_dashboard
-    container_name: internal_dashboard
-    ports:
-      - "8501:8501"
-    depends_on:
-      - flight_status_api
-    environment:
-      - DB_USER=${DB_USER}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - DB_HOST=${DB_HOST}
-      - DB_PORT=${DB_PORT}
-      - DB_NAME=${DB_NAME}
+  # internal_dashboard:
+  #   build:
+  #     context: ./internal_dashboard
+  #   container_name: internal_dashboard
+  #   ports:
+  #     - "8501:8501"
+  #   depends_on:
+  #     - flight_status_api
+  #   environment:
+  #     - DB_USER=${DB_USER}
+  #     - DB_PASSWORD=${DB_PASSWORD}
+  #     - DB_HOST=${DB_HOST}
+  #     - DB_PORT=${DB_PORT}
+  #     - DB_NAME=${DB_NAME}
 
-  airport_dashboard:
-    build:
-      context: ./airport_dashboard
-    container_name: airport_dashboard
-    ports:
-      - "8502:8502"
-    depends_on:
-      - flight_status_data_extract
+  # airport_dashboard:
+  #   build:
+  #     context: ./airport_dashboard
+  #   container_name: airport_dashboard
+  #   ports:
+  #     - "8502:8502"
+  #   depends_on:
+  #     - flight_status_data_extract
 
   # Kafka cluster
   kafka:
@@ -133,6 +133,27 @@ services:
       CLUSTER_ID: "Mk3OEYBSD34fcwNTJENDM2Qk"
     volumes:
       - kafka-data:/var/lib/kafka/data
+
+  # ksqldb-server:
+  #   image: confluentinc/cp-ksqldb-server:latest
+  #   container_name: ksqldb-server
+  #   depends_on:
+  #     - kafka
+  #   environment:
+  #     KSQL_CONFIG_DIR: "/etc/ksql"
+  #     KSQL_BOOTSTRAP_SERVERS: "kafka:9092"
+  #     KSQL_LISTENERS: "http://0.0.0.0:8088"
+  #   ports:
+  #     - "8088:8088"
+
+  # ksqldb-cli:
+  #   image: confluentinc/cp-ksqldb-cli:latest
+  #   container_name: ksqldb-cli
+  #   depends_on:
+  #     - ksqldb-server
+  #   entrypoint: /bin/sh
+  #   tty: true
+
 
   # customer_notifier:
   #   build: ./customer_notifier

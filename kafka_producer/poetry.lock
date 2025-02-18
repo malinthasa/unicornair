@@ -1,0 +1,24 @@
+[[package]]
+name = "kafka-python"
+version = "2.0.3"
+description = "Pure Python client for Apache Kafka"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.extras]
+crc32c = ["crc32c"]
+lz4 = ["lz4"]
+snappy = ["python-snappy"]
+zstd = ["zstandard"]
+
+[metadata]
+lock-version = "1.1"
+python-versions = "3.11.9"
+content-hash = "41157b272230fae9294b89415d7e14f61c5b921d9f1202b1aa51d9d2c8c39a65"
+
+[metadata.files]
+kafka-python = [
+    {file = "kafka-python-2.0.3.tar.gz", hash = "sha256:9ef48bc21f4ac78d80b9f424e5f0f0cd63a29652f5e5f4369960434806f1bbdd"},
+    {file = "kafka_python-2.0.3-py2.py3-none-any.whl", hash = "sha256:ff28bee2430359256d947cffaf951b95e9c66697b59af28014d5b28e160a6084"},
+]

@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "kafka-producer"
+version = "1.0.0"
+description = ""
+authors = ["Malintha Adikari <malintha.adikari@awakemobility.de>"]
+readme = "README.md"
+packages = [{include = "kafka_producer"}]
+
+[tool.poetry.dependencies]
+python = "3.11.9"
+kafka-python = "^2.0.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
