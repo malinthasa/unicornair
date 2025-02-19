@@ -5,7 +5,7 @@ import json
 from datetime import datetime
 
 # Kafka setup
-KAFKA_BROKER = 'localhost:9092'
+KAFKA_BROKER = 'kafka:9092'
 TOPIC = 'engine_temperature_data'
 
 # Initialize Kafka Producer
@@ -52,6 +52,7 @@ def generate_engine_temperature(aircraft_id, flight_number):
 
 
 if __name__ == "__main__":
+    time.sleep(30)
     while True:
         time.sleep(5)
         selected_aircraft = random.choice(aircrafts)

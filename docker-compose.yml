@@ -124,35 +124,46 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
       KAFKA_LOG_DIRS: /var/lib/kafka/data
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_LOG_RETENTION_HOURS: 1
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
       CLUSTER_ID: "Mk3OEYBSD34fcwNTJENDM2Qk"
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+
+      
     volumes:
       - kafka-data:/var/lib/kafka/data
 
-  # ksqldb-server:
-  #   image: confluentinc/cp-ksqldb-server:latest
-  #   container_name: ksqldb-server
-  #   depends_on:
-  #     - kafka
-  #   environment:
-  #     KSQL_CONFIG_DIR: "/etc/ksql"
-  #     KSQL_BOOTSTRAP_SERVERS: "kafka:9092"
-  #     KSQL_LISTENERS: "http://0.0.0.0:8088"
-  #   ports:
-  #     - "8088:8088"
+  ksqldb-server:
+    image: confluentinc/cp-ksqldb-server:latest
+    container_name: ksqldb-server
+    depends_on:
+      - kafka
+    environment:
+      KSQL_CONFIG_DIR: "/etc/ksql"
+      KSQL_BOOTSTRAP_SERVERS: "kafka:9092"
+      KSQL_LISTENERS: "http://0.0.0.0:8088"
+    ports:
+      - "8088:8088"
 
-  # ksqldb-cli:
-  #   image: confluentinc/cp-ksqldb-cli:latest
-  #   container_name: ksqldb-cli
-  #   depends_on:
-  #     - ksqldb-server
-  #   entrypoint: /bin/sh
-  #   tty: true
+  ksqldb-cli:
+    image: confluentinc/cp-ksqldb-cli:latest
+    container_name: ksqldb-cli
+    depends_on:
+      - ksqldb-server
+    entrypoint: /bin/sh
+    tty: true
+
+  kafka_producer:
+    build: ./kafka_producer
+    container_name: kafka_producer
+    restart: always
+    depends_on:
+      - kafka
 
 
   # customer_notifier:
