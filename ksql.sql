@@ -48,3 +48,4 @@ CREATE TABLE avg_engine_temperature_table AS
 >GROUP BY aircraft_id
 >EMIT CHANGES;
 
+docker exec -it ksqldb-cli ksql http://ksqldb-server:8088
