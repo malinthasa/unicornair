@@ -5,6 +5,7 @@ DROP TABLE IF EXISTS booking;
 DROP TABLE IF EXISTS notification;
 DROP TABLE IF EXISTS operational_airport;
 DROP TABLE IF EXISTS flight;
+DROP TABLE IF EXISTS flight_status;
 
 CREATE TABLE plane (
     plane_id SERIAL PRIMARY KEY,
@@ -96,7 +97,7 @@ CREATE TABLE notification (
     notification_id SERIAL PRIMARY KEY,
     booking_id INTEGER NOT NULL,
     flight_id INT NOT NULL,
-    status TEXT CHECK (status IN ('ON_TIME', 'DELAYED', 'CANCELLED', 'DEPARTED', 'ARRIVED')) NOT NULL,
+    status TEXT NOT NULL,
     message TEXT NOT NULL,
     sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (booking_id) REFERENCES booking(booking_id) ON DELETE CASCADE,

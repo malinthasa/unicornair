@@ -15,14 +15,16 @@ logging.basicConfig(
     ]
 )
 
+# DB_HOST = 'localhost'
 DB_HOST = os.getenv('DB_HOST')
+# DB_PORT = 5432
 DB_PORT = os.getenv('DB_PORT')
+# DB_NAME = 'operations'
 DB_NAME = os.getenv('DB_NAME')
+# DB_USER = 'unicorn_admin'
 DB_USER = os.getenv('DB_USER')
+# DB_PASSWORD = 'unicorn_password'
 DB_PASSWORD = os.getenv('DB_PASSWORD')
-
-# Flight Status API URL
-API_URL = 'http://api:8000/flights'
 
 # Email configuration (using SMTP)
 SMTP_SERVER = 'smtp.example.com'
@@ -58,26 +60,30 @@ def get_db_connection():
     return conn
 
 # Function to fetch bookings with passenger emails
-def get_bookings():
+def get_delayed_flight_bookings():
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("""
-        SELECT b.booking_id, b.flight_id, p.email
-        FROM booking b
-        JOIN passenger p ON b.passenger_id = p.passenger_id
+                    select b.booking_id, b.flight_id, p."name" , p.email 
+                    from booking b
+                    inner join flight_status fs2 
+                    on b.flight_id = fs2.flight_id
+                    inner join passenger p 
+                    on b.passenger_id = p.passenger_id
+                    where fs2.status != 'Ontime';
     """)
     bookings = cursor.fetchall()
     conn.close()
     return bookings
 
 # Function to track notifications to prevent duplicates
-def has_notification_been_sent(booking_id, status):
+def has_notification_been_sent(booking_id, flight_id):
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("""
         SELECT 1 FROM notification
-        WHERE booking_id = %s AND status = %s
-    """, (booking_id, status))
+        WHERE booking_id = %s AND flight_id = %s
+    """, (booking_id, flight_id))
     result = cursor.fetchone()
     conn.close()
     return result is not None
@@ -96,35 +102,26 @@ def log_notification(booking_id, flight_id, status, message):
 # Notification service loop
 def notification_service():
     while True:
-        bookings = get_bookings()
-        logging.info(f"Found {len(bookings)} bookings")
+        bookings = get_delayed_flight_bookings()
+        # logging.info(f"Found {len(bookings)} bookings")
 
         for booking in bookings:
-            booking_id, flight_id, email = booking
-            logging.info(f"Checking for notifications for {email} - Flight {flight_id}")
+            booking_id, flight_id, customer_name, email = booking
+            # logging.info(f"Checking for notifications for {email} - Flight {flight_id}")
 
             # Fetch flight status from API
             try:
-                response = requests.get(f"{API_URL}/{flight_id}")
-                response.raise_for_status()  # Raise exception for HTTP errors
-                flight_status = response.json()
-                status = flight_status['status']
 
                 # Send notification if it's a new status
-                if not has_notification_been_sent(booking_id, status):
-                    subject = f"Flight {flight_id} Status Update: {status}"
-                    message = (
-                        f"Dear Passenger,\n\n"
-                        f"Your flight {flight_id} is now {status}.\n\n"
-                        f"Details:\n"
-                        f"Departure: {flight_status['departure_airport']}\n"
-                        f"Arrival: {flight_status['arrival_airport']}\n"
-                        f"Status: {status}\n\n"
-                        f"Thank you for choosing UnicornAir."
-                    )
+                if not has_notification_been_sent(booking_id, flight_id):
+                    subject = f"Flight {flight_id} Status Update: Delayed"
+                    message = f"""Dear {customer_name.split(" ")[0]},\n\n
+                                  Your flight {flight_id} is now delayed.\n\n
+                                  We apologize for the inconvinience occurred.
+                               """
                     # send_email(email, subject, message)  # Uncomment to send emails
-                    log_notification(booking_id, flight_id, status, message)
-                    print(f"Logged notification for {email} - Flight {flight_id}: {status}")
+                    log_notification(booking_id, flight_id, 'delayed', message)
+                    print(f"Logged notification for {email} - Flight {flight_id}: delayed")
 
             except requests.exceptions.RequestException as e:
                 print(f"Error fetching status for flight {flight_id}: {e}")

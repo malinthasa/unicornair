@@ -16,4 +16,4 @@ RUN poetry config virtualenvs.create false && poetry install --no-root --no-inte
 
 COPY . .
 
-CMD ["poetry", "run", "python", "notification.py"]
+CMD ["poetry", "run", "python","-u", "notification.py"]

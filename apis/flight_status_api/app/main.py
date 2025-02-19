@@ -86,7 +86,15 @@ def get_flights(
 def get_flight_by_id(flight_id: str):
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute("SELECT flight_id, status, timestamp, departure_airport, arrival_airport, delay_reason, delay_duration FROM flight_status WHERE flight_id = %s", (flight_id,))
+    cursor.execute("""SELECT flight_id, status, timestamp, da.name, aa.name, delay_reason, delay_duration 
+                        FROM flight_status fs
+                        inner join flight f 
+                        on fs.flight_id = f.id
+                        inner join airport da
+                        on f.departure_airport = da.id 
+                        inner join airport aa
+                        on f.arrival_airport = aa.id 
+                        WHERE flight_id = %s;""", (flight_id,))
     flight = cursor.fetchone()
     conn.close()
 

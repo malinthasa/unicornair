@@ -33,10 +33,10 @@ def get_db_conn():
                     user=DB_USER,
                     password=DB_PASSWORD
                 )
-                logging.info("✅ Connected to PostgreSQL")
+                # logging.info("✅ Connected to PostgreSQL")
         except psycopg2.OperationalError as e:
             logging.error("Error while getting the DB connection")
-        logging.info("✅ Got connection from DB")
+        # logging.info("✅ Got connection from DB")
         return connection
 
 
@@ -65,7 +65,7 @@ def process_csv_file(file_path):
                         row['status'],
                         row['timestamp'],
                         row['delay_reason'],
-                        row['delay_duration'],
+                        int(float(row['delay_duration'])),
                         row['flight_id']
                     ))
 
