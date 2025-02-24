@@ -15,24 +15,18 @@ logging.basicConfig(
     ]
 )
 
-# DB_HOST = 'localhost'
 DB_HOST = os.getenv('DB_HOST')
-# DB_PORT = 5432
 DB_PORT = os.getenv('DB_PORT')
-# DB_NAME = 'operations'
 DB_NAME = os.getenv('DB_NAME')
-# DB_USER = 'unicorn_admin'
 DB_USER = os.getenv('DB_USER')
-# DB_PASSWORD = 'unicorn_password'
 DB_PASSWORD = os.getenv('DB_PASSWORD')
 
-# Email configuration (using SMTP)
 SMTP_SERVER = 'smtp.example.com'
 SMTP_PORT = 587
 SMTP_USER = 'your_email@example.com'
 SMTP_PASSWORD = 'your_password'
 
-# Function to send email notifications
+
 def send_email(recipient, subject, message):
     msg = MIMEText(message)
     msg['Subject'] = subject
@@ -48,7 +42,7 @@ def send_email(recipient, subject, message):
     except Exception as e:
         print(f"Failed to send email to {recipient}: {e}")
 
-# Function to get database connection
+
 def get_db_connection():
     conn = psycopg2.connect(
         host=DB_HOST,
@@ -59,7 +53,7 @@ def get_db_connection():
     )
     return conn
 
-# Function to fetch bookings with passenger emails
+
 def get_delayed_flight_bookings():
     conn = get_db_connection()
     cursor = conn.cursor()
@@ -76,7 +70,7 @@ def get_delayed_flight_bookings():
     conn.close()
     return bookings
 
-# Function to track notifications to prevent duplicates
+
 def has_notification_been_sent(booking_id, flight_id):
     conn = get_db_connection()
     cursor = conn.cursor()
@@ -88,7 +82,7 @@ def has_notification_been_sent(booking_id, flight_id):
     conn.close()
     return result is not None
 
-# Function to log sent notifications
+#
 def log_notification(booking_id, flight_id, status, message):
     conn = get_db_connection()
     cursor = conn.cursor()
@@ -99,20 +93,17 @@ def log_notification(booking_id, flight_id, status, message):
     conn.commit()
     conn.close()
 
-# Notification service loop
+
 def notification_service():
     while True:
         bookings = get_delayed_flight_bookings()
-        # logging.info(f"Found {len(bookings)} bookings")
+        logging.debug(f"Found {len(bookings)} bookings")
 
         for booking in bookings:
             booking_id, flight_id, customer_name, email = booking
-            # logging.info(f"Checking for notifications for {email} - Flight {flight_id}")
+            logging.debug(f"Checking for notifications for {email} - Flight {flight_id}")
 
-            # Fetch flight status from API
             try:
-
-                # Send notification if it's a new status
                 if not has_notification_been_sent(booking_id, flight_id):
                     subject = f"Flight {flight_id} Status Update: Delayed"
                     message = f"""Dear {customer_name.split(" ")[0]},\n\n
@@ -126,7 +117,6 @@ def notification_service():
             except requests.exceptions.RequestException as e:
                 print(f"Error fetching status for flight {flight_id}: {e}")
 
-        # Poll every 5 minutes
         time.sleep(300)
 
 if __name__ == '__main__':

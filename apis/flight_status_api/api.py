@@ -13,7 +13,6 @@ DB_NAME = os.getenv('DB_NAME')
 DB_USER = os.getenv('DB_USER')
 DB_PASSWORD = os.getenv('DB_PASSWORD')
 
-# Function to get database connection
 def get_db_connection():
     conn = psycopg2.connect(
         host=DB_HOST,
@@ -27,14 +26,13 @@ def get_db_connection():
 class FlightStatus(BaseModel):
     flight_id: int
     status: str
-    timestamp: datetime   # Change from str to datetime
+    timestamp: datetime
     departure_airport: str
     arrival_airport: str
     delay_reason: Optional[str] = None
     delay_duration: Optional[int] = 0
 
 
-# API endpoint to fetch all flight statuses
 @app.get('/flights', response_model=List[FlightStatus])
 def get_flights(
     status: Optional[str] = Query(None),
@@ -81,7 +79,6 @@ def get_flights(
         ) for row in flights
     ]
 
-# API endpoint to fetch specific flight details
 @app.get('/flights/{flight_id}', response_model=FlightStatus)
 def get_flight_by_id(flight_id: str):
     conn = get_db_connection()
@@ -113,4 +110,4 @@ def get_flight_by_id(flight_id: str):
     
 @app.get("/")
 def read_root():
-    return {"message": "Hello, World!"}
+    return {"message": "UnicornAir Flight Status API"}
